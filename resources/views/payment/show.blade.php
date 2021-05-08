@@ -14,6 +14,28 @@
             @include('error_card_list')
 
             <div class="card-text">
+                <form>
+                    <!-- 日付 -->
+                    <div class="form-outline mb-4 text-left">
+                        <label class="form-label" for="date">日付</label>
+                        <input type="email" id="date" class="form-control" />
+                    </div>
+                    
+                    <!-- メモ -->
+                    <div class="form-outline mb-4 text-left">
+                        <label class="form-label" for="memo">メモ</label>
+                        <input type="email" id="memo" class="form-control" />
+                    </div>
+                  
+                    <!-- 支出額 -->
+                    <div class="form-outline mb-4 text-left">
+                        <label class="form-label" for="expense">支出額</label>
+                        <input type="password" id="expense" class="form-control" type="number" />
+                    </div>
+                  
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block mb-4">支出を登録する</button>
+                </form>
             </div>
           </div>
         </div>
