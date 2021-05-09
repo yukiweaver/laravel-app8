@@ -21,9 +21,9 @@ class PaymentController extends Controller
     public function show()
     {
         $allCategory = $this->category->getCategoryAll();
-        $params = [
-            'categories' => $allCategory,
+        $viewParams = [
+            'category_list' => $allCategory,
         ];
-        return view('payment.show', $params);
+        return view('payment.show', $viewParams);
     }
 }

@@ -227,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'UserConst' => App\Consts\UserConst::class,
+        'CategoryConst' => App\Consts\CategoryConst::class,
 
     ],
 
