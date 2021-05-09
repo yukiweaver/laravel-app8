@@ -17,7 +17,6 @@
             :category-list='@json($category_list)'
             :img-path='@json(asset(\CategoryConst::IMG_PATH))'
             ></expense>
-            {{-- {{ asset('storage/' . category.img) }} --}}
           </div>
         </div>
       </div>
