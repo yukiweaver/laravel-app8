@@ -16,6 +16,11 @@ class Category extends Model
         'img',
     ];
 
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
     /**
      * 全件取得
      */

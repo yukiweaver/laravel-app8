@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Payment;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-
-
     private $category;
+    private $payment;
 
-    public function __construct()
+    public function __construct(Category $category, Payment $payment)
     {
-        $this->category = app()->make('App\Category');
+        $this->category = $category;
+        $this->payment = $payment;
     }
     /**
      * 支出 or 収入入力ページ
@@ -25,5 +27,21 @@ class PaymentController extends Controller
             'category_list' => $allCategory,
         ];
         return view('payment.show', $viewParams);
+    }
+
+    /**
+     * 登録処理
+     */
+    public function store(Request $request)
+    {
+        $params = $request->all();
+        $params['user_id'] = Auth::id();
+
+        try {
+            $this->payment->create($params);
+            return putJsonSuccess();
+        } catch (\Exception $e) {
+            return putJsonError(['message' => $e->getMessage()]);
+        }
     }
 }

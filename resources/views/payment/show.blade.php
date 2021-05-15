@@ -16,6 +16,7 @@
             <expense
             :category-list='@json($category_list)'
             :img-path='@json(asset(\CategoryConst::IMG_PATH))'
+            store-path={{ route('payment.store') }}
             ></expense>
           </div>
         </div>
