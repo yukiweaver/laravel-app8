@@ -7,7 +7,7 @@ if (!function_exists('putJsonError')) {
             'status' => 'ng',
             'content' => $data,
         ];
-        return json_encode($array);
+        return response()->json($array, 200);
     }
 }
 
@@ -18,6 +18,6 @@ if (!function_exists('putJsonSuccess')) {
             'status' => 'ok',
             'content' => $data,
         ];
-        return json_encode($array);
+        response()->json($array, 200);
     }
 }

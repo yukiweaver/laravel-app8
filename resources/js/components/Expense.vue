@@ -3,18 +3,33 @@
         <!-- 日付 -->
         <div class="form-outline mb-4 text-left">
             <label class="form-label" for="payment_date">日付</label>
+            <p v-if="messages.paymentDate.length">
+                <ul class="text-danger">
+                    <li v-for="(message, key) in messages.paymentDate" :key="key">{{ message }}</li>
+                </ul>
+            </p>
             <input v-model="paymentDate" type="date" id="payment_date" class="form-control" />
         </div>
 
         <!-- メモ -->
         <div class="form-outline mb-4 text-left">
             <label class="form-label" for="memo">メモ</label>
+            <p v-if="messages.memo.length">
+                <ul class="text-danger">
+                    <li v-for="(message, key) in messages.memo" :key="key">{{ message }}</li>
+                </ul>
+            </p>
             <input v-model="memo" id="memo" class="form-control" />
         </div>
 
         <!-- 支出額 -->
         <div class="form-outline mb-4 text-left">
-            <label class="form-label" for="expense">支出額</label>
+            <label class="form-label" for="expense">金額</label>
+            <p v-if="messages.amount.length">
+                <ul class="text-danger">
+                    <li v-for="(message, key) in messages.amount" :key="key">{{ message }}</li>
+                </ul>
+            </p>
             <input v-model="amount" type="number" id="expense" class="form-control" />
         </div>
 
@@ -23,6 +38,11 @@
             <label class="form-label" for="expense">カテゴリー</label>
         </div>
         <div class="sample-form">
+            <p v-if="messages.categoryId.length">
+                <ul class="text-danger">
+                    <li v-for="(message, key) in messages.categoryId" :key="key">{{ message }}</li>
+                </ul>
+            </p>
             <div class="categories" v-for="category in categoryList" :key="category.id">
                 <input v-model="categoryId" :id="category.id" type="radio" :value="category.id">
                 <label :for="category.id"><img :src="imgPath + '/' + category.img" width="60" height="60"></label>
@@ -61,6 +81,14 @@ export default {
             amount: '',
             categoryId: '',
             type: '1',
+            messages: {
+                paymentDate: [],
+                memo: [],
+                amount: [],
+                categoryId: [],
+                type: [],
+                other: [],
+            }
         }
     },
     mounted: function() {
@@ -69,6 +97,10 @@ export default {
     methods: {
         async submit() {
             console.log('submit');
+            Object.keys(this.messages).forEach((key) => {
+                // エラーメッセージはリセット
+                this.messages[key] = [];
+            });
 
             let params = new URLSearchParams();
             params.append('payment_date', this.paymentDate);
@@ -78,28 +110,47 @@ export default {
             params.append('type', this.type);
 
             await axios.post(this.storePath, params)
-            .then(function(response) {
-                console.log(response.data);
+            .then(function(res) {
+                console.log(res.data);
+                let response = res.data;
+                if (response.status == 'ng') {
+                    // エラー時
+                    let errors = response.content.errors;
+                    Object.keys(errors).forEach((key) => {
+                        // エラーメッセージ格納
+                        this.messages[key] = errors[key];
+                    });
+                } else {
+                    // 成功時
+                    alert('登録しました');
+                    this.resetAll();
+                }
             }.bind(this))
             .catch(function(error) {
                 if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
                     console.log(error.response.data);
                     console.log(error.response.status);      // 例：400
                     console.log(error.response.statusText);  // Bad Request
                     console.log(error.response.headers);
                 } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                    // http.ClientRequest in node.js
                     console.log(error.request);
                 } else {
-                    // Something happened in setting up the request that triggered an Error
                     console.log('Error', error.message);
                 }
                 console.log(error.config);
+                alert('処理に失敗しました');
             }.bind(this))
+        },
+        // 値を初期値に戻す
+        resetAll() {
+            this.payementDate = '';
+            this.memo = '';
+            this.amount = '';
+            this.categoryId = '';
+            this.type = '1';
+            Object.keys(this.messages).forEach((key) => {
+                this.messages[key] = [];
+            });
         }
     }
 }

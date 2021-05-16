@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Payment;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PaymentRequest;
 
 class PaymentController extends Controller
 {
@@ -32,7 +33,7 @@ class PaymentController extends Controller
     /**
      * 登録処理
      */
-    public function store(Request $request)
+    public function store(PaymentRequest $request)
     {
         $params = $request->all();
         $params['user_id'] = Auth::id();
@@ -41,7 +42,14 @@ class PaymentController extends Controller
             $this->payment->create($params);
             return putJsonSuccess();
         } catch (\Exception $e) {
-            return putJsonError(['message' => $e->getMessage()]);
+            $data = [
+                'code' => 500,
+                'summary' => 'Exception例外エラー',
+                'errors' => [
+                    'other' => $e->getMessage(),
+                ],
+            ];
+            return putJsonError($data);
         }
     }
 }
