@@ -24,7 +24,7 @@
 
         <!-- 支出額 -->
         <div class="form-outline mb-4 text-left">
-            <label class="form-label" for="expense">金額</label>
+            <label class="form-label" for="expense">支出額</label>
             <p v-if="messages.amount.length">
                 <ul class="text-danger">
                     <li v-for="(message, key) in messages.amount" :key="key">{{ message }}</li>
@@ -43,7 +43,7 @@
             </p>
         </div>
         <div class="sample-form">
-            <div class="categories" v-for="category in categoryList" :key="category.id">
+            <div class="categories" v-for="category in expenseCategoryList" :key="category.id">
                 <input v-model="categoryId" :id="category.id" type="radio" :value="category.id">
                 <label :for="category.id"><img :src="imgPath + '/' + category.img" width="60" height="60"></label>
                 <p>{{ category.name }}</p>
@@ -58,7 +58,7 @@
 import moment from 'moment'
 export default {
     props: {
-        categoryList: {
+        expenseCategoryList: {
             type: Array,
             default: [],
             required: true

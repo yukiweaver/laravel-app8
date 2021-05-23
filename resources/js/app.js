@@ -2,6 +2,7 @@ import './bootstrap'
 import Vue from 'vue'
 import Test from './components/Test'
 import Expense from './components/Expense'
+import Payment from './components/Payment'
 import Income from './components/Income'
 import gv from './mixins/globalValiables' // 共通function
 
@@ -13,5 +14,6 @@ const app = new Vue({
     components: {
         Expense,
         Income,
+        Payment,
     }
 });

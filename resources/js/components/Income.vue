@@ -22,9 +22,9 @@
             <input v-model="memo" id="memo" class="form-control" />
         </div>
 
-        <!-- 支出額 -->
+        <!-- 収入額 -->
         <div class="form-outline mb-4 text-left">
-            <label class="form-label" for="expense">金額</label>
+            <label class="form-label" for="expense">収入額</label>
             <p v-if="messages.amount.length">
                 <ul class="text-danger">
                     <li v-for="(message, key) in messages.amount" :key="key">{{ message }}</li>
