@@ -13,11 +13,16 @@
 
             @include('error_card_list')
 
-            <expense
-            :category-list='@json($category_list)'
+            {{-- <expense
+            :category-list='@json($expense_category_list)'
             :img-path='@json(asset(\CategoryConst::IMG_PATH))'
             store-path={{ route('payment.store') }}
-            ></expense>
+            ></expense> --}}
+            <income
+            :category-list='@json($income_category_list)'
+            :img-path='@json(asset(\CategoryConst::IMG_PATH))'
+            store-path={{ route('payment.store') }}
+            ></income>
           </div>
         </div>
       </div>

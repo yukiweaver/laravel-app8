@@ -23,9 +23,17 @@ class PaymentController extends Controller
      */
     public function show()
     {
-        $allCategory = $this->category->getCategoryAll();
+        $expenseCategories = $this->category->getCategoryByTypes([
+            \CategoryConst::TYPE_EXPENSE,
+            \CategoryConst::TYPE_EXPENSE_AND_INCOME,
+        ]);
+        $incomeCategories = $this->category->getCategoryByTypes([
+            \CategoryConst::TYPE_INCOME,
+            \CategoryConst::TYPE_EXPENSE_AND_INCOME,
+        ]);
         $viewParams = [
-            'category_list' => $allCategory,
+            'expense_category_list' => $expenseCategories,
+            'income_category_list' => $incomeCategories,
         ];
         return view('payment.show', $viewParams);
     }

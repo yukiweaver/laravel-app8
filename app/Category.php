@@ -14,6 +14,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'img',
+        'type',
     ];
 
     public function payments()
@@ -22,10 +23,12 @@ class Category extends Model
     }
 
     /**
-     * 全件取得
+     * 指定タイプのカテゴリーを取得
+     * @param array $types
+     * @return collection
      */
-    public function getCategoryAll()
+    public function getCategoryByTypes($types)
     {
-        return $this->all();
+        return $this->whereIn('type', $types)->get();
     }
 }

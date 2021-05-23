@@ -2,6 +2,7 @@ import './bootstrap'
 import Vue from 'vue'
 import Test from './components/Test'
 import Expense from './components/Expense'
+import Income from './components/Income'
 import gv from './mixins/globalValiables' // 共通function
 
 // mixinで共通functionをthis.でcallできる
@@ -11,5 +12,6 @@ const app = new Vue({
     el: '#app',
     components: {
         Expense,
+        Income,
     }
 });
