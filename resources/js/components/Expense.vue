@@ -36,13 +36,13 @@
         <!-- カテゴリー -->
         <div class="form-outline mb-4 text-left">
             <label class="form-label" for="expense">カテゴリー</label>
-        </div>
-        <div class="sample-form">
             <p v-if="messages.categoryId.length">
                 <ul class="text-danger">
                     <li v-for="(message, key) in messages.categoryId" :key="key">{{ message }}</li>
                 </ul>
             </p>
+        </div>
+        <div class="sample-form">
             <div class="categories" v-for="category in categoryList" :key="category.id">
                 <input v-model="categoryId" :id="category.id" type="radio" :value="category.id">
                 <label :for="category.id"><img :src="imgPath + '/' + category.img" width="60" height="60"></label>
@@ -118,7 +118,8 @@ export default {
                     let errors = response.content.errors;
                     Object.keys(errors).forEach((key) => {
                         // エラーメッセージ格納
-                        this.messages[key] = errors[key];
+                        let camelKey = this.fSnakeToCamel(key);
+                        this.messages[camelKey] = errors[key];
                     });
                 } else {
                     // 成功時
