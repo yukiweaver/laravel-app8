@@ -43,7 +43,7 @@
             </p>
         </div>
         <div class="sample-form">
-            <div class="categories" v-for="category in categoryList" :key="category.id">
+            <div class="categories" v-for="category in incomeCategoryList" :key="category.id">
                 <input v-model="categoryId" :id="category.id" type="radio" :value="category.id">
                 <label :for="category.id"><img :src="imgPath + '/' + category.img" width="60" height="60"></label>
                 <p>{{ category.name }}</p>
@@ -58,7 +58,7 @@
 import moment from 'moment'
 export default {
     props: {
-        categoryList: {
+        incomeCategoryList: {
             type: Array,
             default: [],
             required: true

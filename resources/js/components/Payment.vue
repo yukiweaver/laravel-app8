@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-secondary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> 支出
+        <div class="btn-group btn-group-toggle" ref="payment" data-toggle="buttons">
+            <label @click="handleClick" class="btn btn-secondary active" data-id="expense">
+                <input type="radio" name="options" autocomplete="off" checked> 支出
             </label>
-            <label class="btn btn-secondary">
-                <input type="radio" name="options" id="option2" autocomplete="off"> 収入
+            <label @click="handleClick" class="btn btn-secondary" data-id="income">
+                <input type="radio" name="options" autocomplete="off"> 収入
             </label>
         </div>
         <component 
@@ -51,6 +51,11 @@ export default {
     data() {
         return {
             currentView: 'expense',
+        }
+    },
+    methods: {
+        handleClick(e) {
+            this.currentView = e.currentTarget.getAttribute('data-id');
         }
     }
 }
