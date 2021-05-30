@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect('/payment/show');
+        return redirect('/payment/create');
     } else {
         return redirect('/login');
     }
@@ -21,9 +21,9 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/payment/show', [
-        'uses' => 'PaymentController@show',
-        'as' => 'payment.show',
+    Route::get('/payment/create', [
+        'uses' => 'PaymentController@create',
+        'as' => 'payment.create',
     ]);
     Route::post('/payment/store', [
         'uses' => 'PaymentController@store',

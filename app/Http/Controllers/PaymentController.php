@@ -21,7 +21,7 @@ class PaymentController extends Controller
     /**
      * 支出 or 収入入力ページ
      */
-    public function show()
+    public function create()
     {
         $expenseCategories = $this->category->getCategoryByTypes([
             \CategoryConst::TYPE_EXPENSE,
@@ -35,7 +35,7 @@ class PaymentController extends Controller
             'expense_category_list' => $expenseCategories,
             'income_category_list' => $incomeCategories,
         ];
-        return view('payment.show', $viewParams);
+        return view('payment.create', $viewParams);
     }
 
     /**

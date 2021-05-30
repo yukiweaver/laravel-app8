@@ -12,7 +12,7 @@
   
       @guest
       <li class="nav-item">
-        <a class="nav-link" href="">ログイン</a>
+        <a class="nav-link" href="{{ route('login') }}">ログイン</a>
       </li>
       @endguest
       
@@ -26,7 +26,7 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
           <button class="dropdown-item" type="button"
                   onclick="location.href=''">
-            マイページ
+            カレンダー
           </button>
           <div class="dropdown-divider"></div>
           <button form="logout-button" class="dropdown-item" type="submit">

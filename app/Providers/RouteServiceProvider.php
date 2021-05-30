@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * 支出 or 収入入力ページへのpath
      */
-    public const PAYMENT_SHOW = '/payment/show';
+    public const PAYMENT_CREATE = '/payment/create';
 
     /**
      * Define your route model bindings, pattern filters, etc.

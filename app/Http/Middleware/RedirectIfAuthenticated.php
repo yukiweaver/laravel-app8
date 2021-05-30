@@ -21,7 +21,7 @@ class RedirectIfAuthenticated
         // session()->flush();
         if (Auth::guard($guard)->check()) {
             // return redirect(RouteServiceProvider::HOME);
-            return redirect(RouteServiceProvider::PAYMENT_SHOW);
+            return redirect(RouteServiceProvider::PAYMENT_CREATE);
         }
 
         return $next($request);
