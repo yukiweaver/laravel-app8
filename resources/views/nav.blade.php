@@ -25,7 +25,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
           <button class="dropdown-item" type="button"
-                  onclick="location.href=''">
+                  onclick="location.href='{{ route('payment.show') }}'">
             カレンダー
           </button>
           <div class="dropdown-divider"></div>

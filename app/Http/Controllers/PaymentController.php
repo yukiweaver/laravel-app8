@@ -60,4 +60,12 @@ class PaymentController extends Controller
             return putJsonError($data);
         }
     }
+
+    /**
+     * カレンダーページ
+     */
+    public function show()
+    {
+        return view('payment.show');
+    }
 }

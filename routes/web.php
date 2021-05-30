@@ -29,4 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'PaymentController@store',
         'as' => 'payment.store',
     ]);
+    Route::get('/payment/show', [
+        'uses' => 'PaymentController@show',
+        'as' => 'payment.show',
+    ]);
 });
