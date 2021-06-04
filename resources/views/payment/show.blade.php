@@ -10,6 +10,11 @@
         <div class="card mt-3">
           <div class="card-body text-center">
             <h2 class="h3 card-title text-center mt-2">カレンダー</h2>
+            {{-- 値渡しがうまくいっていない --}}
+            <show
+            :monthly-start-date='@json($monthly_start_date)'
+            >
+            </show>
           </div>
         </div>
       </div>

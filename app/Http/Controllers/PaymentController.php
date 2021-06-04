@@ -66,6 +66,9 @@ class PaymentController extends Controller
      */
     public function show()
     {
-        return view('payment.show');
+        $viewParams = [
+            'monthly_start_date' => Auth::user()->monthly_start_date,
+        ];
+        return view('payment.show', $viewParams);
     }
 }
