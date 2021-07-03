@@ -1,49 +1,32 @@
 <template>
-    <!-- <div style="max-width:900px;border-top:5px solid red;">
-        <div v-for="(week, index) in calendars" :key="index" style="display:flex;border-left:5px solid green">
-            <div v-for="(day, index) in week" :key="index" style="
-            flex:1;min-height:125px;
-            border-right:5px solid blue;
-            border-bottom:5px solid blue
-            ">
-                {{ day.date }}
-            </div>
+    <div>
+        <div>
+            <span class="btn btn-primary">←</span>
+            <div id="border" class="border" style="padding:10px;">{{ baseMonth }}</div>
+            <span class="btn btn-primary">→</span>
         </div>
-    </div> -->
-    <!-- <table>
-        <tr>
-            <th>日</th>
-            <th>月</th>
-            <th>火</th>
-            <th>水</th>
-            <th>木</th>
-            <th>金</th>
-            <th>土</th>
-        </tr>
-        <tr v-for="(week, index) in calendars" :key="index">
-            <td v-for="(day, index) in week" :key="index">{{ day.date }}</td>
-        </tr>
-    </table> -->
-    <table class="osare-table col5t">
-        <thead>
-            <tr>
-                <th class="youbi">日</th>
-                <th class="youbi">月</th>
-                <th class="youbi">火</th>
-                <th class="youbi">水</th>
-                <th class="youbi">木</th>
-                <th class="youbi">金</th>
-                <th class="youbi">土</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(week, index) in calendars" :key="index">
-                <td class="days" v-for="(day, index) in week" :key="index">
-                    {{ day.date }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <br>
+        <table class="osare-table col5t">
+            <thead>
+                <tr>
+                    <th class="youbi">日</th>
+                    <th class="youbi">月</th>
+                    <th class="youbi">火</th>
+                    <th class="youbi">水</th>
+                    <th class="youbi">木</th>
+                    <th class="youbi">金</th>
+                    <th class="youbi">土</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(week, index) in calendars" :key="index">
+                    <td class="days" v-for="(day, index) in week" :key="index">
+                        {{ day.date }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -57,7 +40,12 @@ export default {
     },
     data() {
         return {
-            //
+            // 修正必須
+            // 例えば基準日15で現在日6/7なら5/15〜6/14日のデータになり、5月分になる
+            // 現在日 <= 基準日から算出される最終日（6/14）なら5月分
+            // 現在日 > 基準日から算出される最終日（6/14）なら6月分
+            baseDateInstance: moment().date(this.monthlyStartDate),
+            baseMonth: '',
         }
     },
     methods: {
@@ -65,7 +53,7 @@ export default {
          * カレンダーに表示する最初の日付データを返す
          */
         getStartDate() {
-            let date = moment().date(this.monthlyStartDate);
+            let date = moment(this.baseDateInstance);
             const youbiNum = date.day();
             return date.subtract(youbiNum, 'days');
         },
@@ -73,7 +61,8 @@ export default {
          * カレンダーに表示する最後の日付データを返す
          */
         getEndDate() {
-            let date = moment().date(this.monthlyStartDate).add(1, 'months').subtract(1, 'days');
+            let date = moment(this.baseDateInstance);
+            date.add(1, 'months').subtract(1, 'days');
             const youbiNum = date.day();
             return date.add(6 - youbiNum, 'days');
         },
@@ -103,6 +92,7 @@ export default {
         },
     },
     mounted() {
+        this.baseMonth = this.baseDateInstance.format('YYYY年MM月');
         console.log(this.getStartDate());
         console.log(this.getEndDate());
         console.log(this.getCalendar());
@@ -116,6 +106,14 @@ export default {
 </script>
 
 <style>
+#border {
+    padding:10px;
+    width:50%;
+    text-align:center;
+    display:inline-block;
+}
+
+
 .osare-table {
     width:100%;
     table-layout: fixed;
