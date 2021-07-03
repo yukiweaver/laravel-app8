@@ -92,6 +92,7 @@ export default {
         },
     },
     mounted() {
+        console.log(moment());
         this.baseMonth = this.baseDateInstance.format('YYYY年MM月');
         console.log(this.getStartDate());
         console.log(this.getEndDate());
@@ -121,17 +122,17 @@ export default {
     border-collapse: separate;
     border-spacing: 7px 0px;
 }
- 
+
 .osare-table th {
     border: none !important;
 }
- 
+
 .osare-table tbody td {
     border: none !important;
     background-color:#FFF9FF !important;
     border-bottom: solid 2px #f9f9f9 !important;
 }
- 
+
 /* ヘッダー */
 .osare-table thead th {
     font-weight: bold;
@@ -142,8 +143,8 @@ export default {
 .osare-table tfoot td {
     border-radius: 0 0 10px 10px;
 }
- 
- 
+
+
 /* ボディ項目 */
 .osare-table tbody th {
     background:#f2f5fc;
@@ -151,7 +152,7 @@ export default {
     border-bottom: solid 2px #f9f9f9 !important;
     line-height:4.5em;
 }
- 
+
 /* フッター項目 */
 .osare-table tfoot th {
     background:none;
@@ -160,12 +161,12 @@ export default {
 }
 
 
- 
+
 /* ボディデータ */
 .osare-table tbody td {
     text-align:center;
 }
- 
+
 /* ヘッダー行　１列ごとの色変え */
 .osare-table thead th:nth-child(1)  {
     background: #FFB2D8;
@@ -188,7 +189,7 @@ export default {
 .osare-table thead th:nth-child(7)  {
     background: #FFDAB9;
 }
- 
+
 /* 最終行のボーダーをなくす */
 .osare-table tbody tr:last-child th,
 .osare-table tbody tr:last-child td {
@@ -215,7 +216,7 @@ export default {
     .osare-table tfoot td:nth-child(2) {
         font-size:1.2em;
     }
-  
+
 }
 
 /*（共通）　項目の多いテーブルの幅を調整*/
