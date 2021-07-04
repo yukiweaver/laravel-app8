@@ -40,11 +40,7 @@ export default {
     },
     data() {
         return {
-            // 修正必須
-            // 例えば基準日15で現在日6/7なら5/15〜6/14日のデータになり、5月分になる
-            // 現在日 <= 基準日から算出される最終日（6/14）なら5月分
-            // 現在日 > 基準日から算出される最終日（6/14）なら6月分
-            baseDateInstance: moment().date(this.monthlyStartDate),
+            baseDateInstance: '',
             baseMonth: '',
         }
     },
@@ -92,7 +88,15 @@ export default {
         },
     },
     mounted() {
-        console.log(moment());
+        let today = moment();
+        let date = moment().date(this.monthlyStartDate); // 今月の基準日
+        if (today.isBefore(date, 'day')) {
+            // 今月の基準日より前なら先月分
+            this.baseDateInstance = moment().subtract(1, 'months').date(this.monthlyStartDate);
+        } else {
+            // 今月の基準日以降なら今月分
+            this.baseDateInstance = moment().date(this.monthlyStartDate);
+        }
         this.baseMonth = this.baseDateInstance.format('YYYY年MM月');
         console.log(this.getStartDate());
         console.log(this.getEndDate());
