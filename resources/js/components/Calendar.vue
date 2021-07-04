@@ -98,9 +98,6 @@ export default {
             this.baseDateInstance = moment().date(this.monthlyStartDate);
         }
         this.baseMonth = this.baseDateInstance.format('YYYY年MM月');
-        console.log(this.getStartDate());
-        console.log(this.getEndDate());
-        console.log(this.getCalendar());
     },
     computed: {
         calendars() {
@@ -133,7 +130,7 @@ export default {
 
 .osare-table tbody td {
     border: none !important;
-    background-color:#FFF9FF !important;
+    background-color:#FFF9FF;
     border-bottom: solid 2px #f9f9f9 !important;
 }
 
@@ -205,6 +202,10 @@ export default {
 }
 .days {
     padding: 15px;
+}
+
+.inactive {
+    background-color: #bec4c4 !important;
 }
 
 /* スマホ調整 */
