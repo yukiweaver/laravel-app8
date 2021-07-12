@@ -2,7 +2,7 @@
     <div>
         <div>
             <span class="btn btn-primary">←</span>
-            <div id="border" class="border" style="padding:10px;">{{ baseMonth }}</div>
+            <div id="border" class="border" style="padding:10px;">{{ baseMonthStr }}</div>
             <span class="btn btn-primary">→</span>
         </div>
         <br>
@@ -21,6 +21,7 @@
             <tbody>
                 <tr v-for="(week, index) in calendars" :key="index">
                     <td class="days" v-for="(day, index) in week" :key="index">
+                        <!-- {{ isInActiveDay(day.date) }} -->
                         {{ day.date }}
                     </td>
                 </tr>
@@ -41,7 +42,9 @@ export default {
     data() {
         return {
             baseDateInstance: '',
-            baseMonth: '',
+            baseMonthStr: '',
+            baseStartDate: '',
+            baseEndDate: ','
         }
     },
     methods: {
@@ -50,6 +53,7 @@ export default {
          */
         getStartDate() {
             let date = moment(this.baseDateInstance);
+            this.baseStartDate = date.clone();
             const youbiNum = date.day();
             return date.subtract(youbiNum, 'days');
         },
@@ -59,6 +63,7 @@ export default {
         getEndDate() {
             let date = moment(this.baseDateInstance);
             date.add(1, 'months').subtract(1, 'days');
+            this.baseEndDate = date.clone();
             const youbiNum = date.day();
             return date.add(6 - youbiNum, 'days');
         },
@@ -76,8 +81,9 @@ export default {
             for (let week = 0; week < weekNumber; week++) {
                 let weekRow = [];
                 for (let day = 0; day < 7; day++) {
+                    let month = startDate.get('month') + 1; // moment.jsの仕様上monthは0〜11のため+1する
                     weekRow.push({
-                        date: startDate.get('date'),
+                        date: month + '/' + startDate.get('date'),
                     });
                     startDate.add(1, 'days');
                 }
@@ -86,8 +92,11 @@ export default {
 
             return calendars;
         },
+        isInActiveDay($day) {
+            //
+        }
     },
-    mounted() {
+    created() {
         let today = moment();
         let date = moment().date(this.monthlyStartDate); // 今月の基準日
         if (today.isBefore(date, 'day')) {
@@ -97,12 +106,12 @@ export default {
             // 今月の基準日以降なら今月分
             this.baseDateInstance = moment().date(this.monthlyStartDate);
         }
-        this.baseMonth = this.baseDateInstance.format('YYYY年MM月');
+        this.baseMonthStr = this.baseDateInstance.format('YYYY年MM月');
     },
     computed: {
         calendars() {
             return this.getCalendar();
-        }
+        },
     }
 }
 </script>
