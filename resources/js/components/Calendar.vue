@@ -20,8 +20,9 @@
             </thead>
             <tbody>
                 <tr v-for="(week, index) in calendars" :key="index">
-                    <td class="days" v-for="(day, index) in week" :key="index">
-                        <!-- {{ isInActiveDay(day.date) }} -->
+                    <td
+                        :class="[isInActiveDay(day.date) ? 'inactive' : '', 'days']"
+                        v-for="(day, index) in week" :key="index">
                         {{ day.date }}
                     </td>
                 </tr>
@@ -43,8 +44,8 @@ export default {
         return {
             baseDateInstance: '',
             baseMonthStr: '',
-            baseStartDate: '',
-            baseEndDate: ','
+            baseStartDateStr: '',
+            baseEndDateStr: ','
         }
     },
     methods: {
@@ -53,7 +54,7 @@ export default {
          */
         getStartDate() {
             let date = moment(this.baseDateInstance);
-            this.baseStartDate = date.clone();
+            this.baseStartDateStr = date.clone().format('M/D');
             const youbiNum = date.day();
             return date.subtract(youbiNum, 'days');
         },
@@ -63,7 +64,7 @@ export default {
         getEndDate() {
             let date = moment(this.baseDateInstance);
             date.add(1, 'months').subtract(1, 'days');
-            this.baseEndDate = date.clone();
+            this.baseEndDateStr = date.clone().format('M/D');
             const youbiNum = date.day();
             return date.add(6 - youbiNum, 'days');
         },
@@ -93,7 +94,14 @@ export default {
             return calendars;
         },
         isInActiveDay($day) {
-            //
+            // Todo:判定がおかしい
+            console.log('baseStartDateStr: ' + this.baseStartDateStr);
+            console.log('baseEndDateStr: ' + this.baseEndDateStr);
+            console.log($day);
+            if ($day < this.baseStartDateStr || $day > this.baseEndDateStr) {
+                return true;
+            }
+            return false;
         }
     },
     created() {
