@@ -23,7 +23,7 @@
                     <td
                         :class="[isInActiveDay(day.date) ? 'inactive' : '', 'days']"
                         v-for="(day, index) in week" :key="index">
-                        {{ day.date }}
+                        {{ sliceDate(day.date) }}
                     </td>
                 </tr>
             </tbody>
@@ -44,8 +44,8 @@ export default {
         return {
             baseDateInstance: '',
             baseMonthStr: '',
-            baseStartDateStr: '',
-            baseEndDateStr: ','
+            baseStartDate: '',
+            baseEndDate: ','
         }
     },
     methods: {
@@ -54,7 +54,7 @@ export default {
          */
         getStartDate() {
             let date = moment(this.baseDateInstance);
-            this.baseStartDateStr = date.clone().format('M/D');
+            this.baseStartDate = date.clone();
             const youbiNum = date.day();
             return date.subtract(youbiNum, 'days');
         },
@@ -64,7 +64,7 @@ export default {
         getEndDate() {
             let date = moment(this.baseDateInstance);
             date.add(1, 'months').subtract(1, 'days');
-            this.baseEndDateStr = date.clone().format('M/D');
+            this.baseEndDate = date.clone();
             const youbiNum = date.day();
             return date.add(6 - youbiNum, 'days');
         },
@@ -82,9 +82,10 @@ export default {
             for (let week = 0; week < weekNumber; week++) {
                 let weekRow = [];
                 for (let day = 0; day < 7; day++) {
+                    let year = startDate.get('year');
                     let month = startDate.get('month') + 1; // moment.jsの仕様上monthは0〜11のため+1する
                     weekRow.push({
-                        date: month + '/' + startDate.get('date'),
+                        date: year + '-' + month + '-' + startDate.get('date'),
                     });
                     startDate.add(1, 'days');
                 }
@@ -93,15 +94,22 @@ export default {
 
             return calendars;
         },
+        /**
+         * inactiveクラスを付与するか判定
+         */
         isInActiveDay($day) {
-            // Todo:判定がおかしい
-            console.log('baseStartDateStr: ' + this.baseStartDateStr);
-            console.log('baseEndDateStr: ' + this.baseEndDateStr);
-            console.log($day);
-            if ($day < this.baseStartDateStr || $day > this.baseEndDateStr) {
+            let m = moment($day, 'YYYY-MM-DD');
+            if (m.isBefore(this.baseStartDate, 'day') || m.isAfter(this.baseEndDate, 'day')) {
                 return true;
             }
             return false;
+        },
+        /**
+         * 日付文字列を切り取って返す
+         */
+        sliceDate($day) {
+            let m = moment($day, 'YYYY-MM-DD');
+            return m.get('date');
         }
     },
     created() {
