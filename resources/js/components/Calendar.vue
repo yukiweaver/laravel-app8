@@ -1,9 +1,9 @@
 <template>
     <div>
         <div>
-            <span class="btn btn-primary">←</span>
+            <span class="btn btn-sm btn-primary">←</span>
             <div id="border" class="border" style="padding:10px;">{{ baseMonthStr }}</div>
-            <span class="btn btn-primary">→</span>
+            <span class="btn btn-sm btn-primary">→</span>
         </div>
         <br>
         <table class="osare-table col5t">
