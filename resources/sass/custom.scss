@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+/* ラジオボタンの○を消す */
+.sample-form input[type="radio"] {
+    display: none;
+}
+/* 画像の周りに隙間をあける */
+.sample-form label img {
+    margin: 3px;
+    padding: 5px;
+}
+/* 未選択の場合、色を薄くする */
+.sample-form input[type="radio"] + label img {
+    opacity: 0.4;
+}
+/* 選択済みの場合、色を濃くする */
+.sample-form input[type="radio"]:checked + label img {
+    opacity: 1;
+}
+
+/* 未選択の場合、色を薄くする */
+.sample-form input[type="radio"] + label img {
+    opacity: 0.4;
+}
+/* 選択済みの場合、色を濃くする */
+.sample-form input[type="radio"]:checked + label img {
+    opacity: 1;
+}
+
+.categories {
+    display: inline-block;
+}
