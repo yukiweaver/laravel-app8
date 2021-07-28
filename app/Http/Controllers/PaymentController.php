@@ -7,16 +7,19 @@ use App\Category;
 use App\Payment;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PaymentRequest;
+use App\Services\PaymentService;
 
 class PaymentController extends Controller
 {
     private $category;
     private $payment;
+    private $paymentService;
 
-    public function __construct(Category $category, Payment $payment)
+    public function __construct(Category $category, Payment $payment, PaymentService $paymentService)
     {
         $this->category = $category;
         $this->payment = $payment;
+        $this->paymentService = $paymentService;
     }
     /**
      * 支出 or 収入入力ページ
@@ -64,8 +67,10 @@ class PaymentController extends Controller
     /**
      * カレンダーページ
      */
-    public function show()
+    public function show(Request $request)
     {
+        // TODO:初回遷移時はmonthly_start_dateからbaseDateを算出してデータを取得する必要がある
+        $period = $this->paymentService->getPeriodByMonthlyStartDate(Auth::user()->monthly_start_date);
         $viewParams = [
             'monthly_start_date' => Auth::user()->monthly_start_date,
         ];
