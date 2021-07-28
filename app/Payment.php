@@ -41,4 +41,20 @@ class Payment extends Model
 
         return $this->save();
     }
+
+    /**
+     * 指定期間の支出、収入データを取得
+     * @param int $userId
+     * @param string $startDate
+     * @param string $endDate
+     * @return collection
+     */
+    public function getPaymentsByPeriod($userId, $startDate, $endDate)
+    {
+        $payments = $this->where('user_id', '=', $userId)
+                         ->whereBetween('payment_date', [$startDate, $endDate])
+                         ->get();
+
+        return $payments;
+    }
 }
