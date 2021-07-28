@@ -70,9 +70,7 @@ class PaymentController extends Controller
     public function show(Request $request)
     {
         // TODO:初回遷移時はmonthly_start_dateからbaseDateを算出してデータを取得する必要がある
-        // ロジックはpaymentServiceで書く
         $period = $this->paymentService->getPeriodByMonthlyStartDate(Auth::user()->monthly_start_date);
-        dd($period);
         $viewParams = [
             'monthly_start_date' => Auth::user()->monthly_start_date,
         ];
