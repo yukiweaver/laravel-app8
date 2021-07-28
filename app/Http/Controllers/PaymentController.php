@@ -63,6 +63,7 @@ class PaymentController extends Controller
 
     /**
      * カレンダーページ
+     * テストコメント
      */
     public function show()
     {
