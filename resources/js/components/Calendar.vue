@@ -113,8 +113,10 @@ export default {
         }
     },
     created() {
+        // TODO:初回読み込み時の今月分しか対応できていない
         let today = moment();
         let date = moment().date(this.monthlyStartDate); // 今月の基準日
+        console.log(date);
         if (today.isBefore(date, 'day')) {
             // 今月の基準日より前なら先月分
             this.baseDateInstance = moment().subtract(1, 'months').date(this.monthlyStartDate);

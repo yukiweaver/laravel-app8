@@ -69,8 +69,12 @@ class PaymentController extends Controller
      */
     public function show(Request $request)
     {
-        // TODO:初回遷移時はmonthly_start_dateからbaseDateを算出してデータを取得する必要がある
-        $period = $this->paymentService->getPeriodByMonthlyStartDate(Auth::user()->monthly_start_date);
+        // TODO:$requestからは今日の年、月、日をそれぞれ別でもらう、そしてDBの値monthly_start_dateと比較して基準日を決定する。
+        // php側でCarbonをセットして、$periodを算出する
+        $monthlyStartDate = Auth::user()->monthly_start_date;
+        $baseDate = $this->paymentService->getBaseDate($monthlyStartDate, $request->all());
+        // TODO:↓ここから修正
+        $period = $this->paymentService->getPeriodByBaseDate($baseDate);
         $viewParams = [
             'monthly_start_date' => Auth::user()->monthly_start_date,
         ];
