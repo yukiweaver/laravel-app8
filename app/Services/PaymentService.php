@@ -31,7 +31,7 @@ class PaymentService
     }
 
     /**
-     * 算出に用いる基準となる日時データを取得
+     * 基準日を取得
      * （ここで欲しいのは、
      * パラメータ値なしで今日が8/1なら7/15のCarbon、パラメータありで値が7/1なら6/15のCarbon、パラメータありで値が7/18なら7/15のCarbon）
      * @return Carbon
@@ -45,18 +45,28 @@ class PaymentService
             } else {
                 $baseDate = $targetDate->copy();
             }
-
-            return $baseDate;
-        }
-
-        $targetDate = $this->dateService->getDate($monthlyStartDate, $dateData['year'], $dateData['month']);
-        $date = $this->dateService->getDate($dateData['day'], $dateData['year'], $dateData['month']);
-        if ($date->lt($targetDate)) {
-            $baseDate = $targetDate->copy()->subMonth()->day($monthlyStartDate);
         } else {
-            $baseDate = $targetDate->copy();
+            $targetDate = $this->dateService->getDate($monthlyStartDate, $dateData['year'], $dateData['month']);
+            $date = $this->dateService->getDate($dateData['day'], $dateData['year'], $dateData['month']);
+            if ($date->lt($targetDate)) {
+                $baseDate = $targetDate->copy()->subMonth()->day($monthlyStartDate);
+            } else {
+                $baseDate = $targetDate->copy();
+            }
         }
 
         return $baseDate;
+    }
+
+    /**
+     * 日付でまとめて返す
+     */
+    public function convertGroupByPaymentDate($payments)
+    {
+        if ($payments->isEmpty()) {
+            return $payments;
+        }
+
+        return $payments->groupby('payment_date');
     }
 }

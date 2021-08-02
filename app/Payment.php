@@ -52,8 +52,9 @@ class Payment extends Model
     public function getPaymentsByPeriod($userId, $startDate, $endDate)
     {
         $payments = $this->where('user_id', '=', $userId)
-                         ->whereBetween('payment_date', [$startDate, $endDate])
-                         ->get();
+            ->whereBetween('payment_date', [$startDate, $endDate])
+            ->orderBy('payment_date', 'DESC')
+            ->get();
 
         return $payments;
     }

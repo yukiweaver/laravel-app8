@@ -69,14 +69,15 @@ class PaymentController extends Controller
      */
     public function show(Request $request)
     {
-        // TODO:$requestからは今日の年、月、日をそれぞれ別でもらう、そしてDBの値monthly_start_dateと比較して基準日を決定する。
-        // php側でCarbonをセットして、$periodを算出する
+        // $requestからは今日の年、月、日をそれぞれ別でもらう、そしてDBの値monthly_start_dateと比較して基準日を決定する。
         $monthlyStartDate = Auth::user()->monthly_start_date;
         $baseDate = $this->paymentService->getBaseDate($monthlyStartDate, $request->all());
-        // TODO:↓ここから修正
         $period = $this->paymentService->getPeriodByBaseDate($baseDate);
+        $payments = $this->payment->getPaymentsByPeriod(Auth::user()->id, $period['start_date'], $period['end_date']);
+        $payments = $this->paymentService->convertGroupByPaymentDate($payments);
         $viewParams = [
             'monthly_start_date' => Auth::user()->monthly_start_date,
+            'payments' => $payments,
         ];
         return view('payment.show', $viewParams);
     }

@@ -4,7 +4,10 @@
         :monthly-start-date="monthlyStartDate"
         >
         </calendar>
-        <payment-data></payment-data>
+        <payment-data
+        :payments="payments"
+        >
+        </payment-data>
     </div>
 </template>
 
@@ -21,6 +24,10 @@ export default {
         monthlyStartDate: {
             type: Number,
             default: 1,
+        },
+        payments: {
+            type: Object,
+            default: [],
         }
     }
 }

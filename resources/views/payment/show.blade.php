@@ -12,6 +12,7 @@
             <h2 class="h3 card-title text-center mt-2">カレンダー</h2>
             <show
             :monthly-start-date='@json($monthly_start_date)'
+            :payments='@json($payments)'
             >
             </show>
           </div>
