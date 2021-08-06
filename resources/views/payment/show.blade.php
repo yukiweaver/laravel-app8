@@ -14,6 +14,9 @@
             :monthly-start-date='@json($monthly_start_date)'
             :payments='@json($payments)'
             :categories='@json($categories)'
+            :base-date='@json($base_date)'
+            :start-date='@json($start_date)'
+            :end-date='@json($end_date)'
             >
             </show>
           </div>

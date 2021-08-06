@@ -2,6 +2,9 @@
     <div>
         <calendar
         :monthly-start-date="monthlyStartDate"
+        :base-date="baseDate"
+        :start-date="startDate"
+        :end-date="endDate"
         >
         </calendar>
         <payment-data
@@ -33,7 +36,19 @@ export default {
         categories: {
             type: Array,
             default: [],
-        }
+        },
+        baseDate: {
+            type: String,
+            default: '',
+        },
+        startDate: {
+            type: String,
+            default: '',
+        },
+        endDate: {
+            type: String,
+            default: '',
+        },
     }
 }
 </script>

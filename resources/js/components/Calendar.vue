@@ -38,14 +38,26 @@ export default {
         monthlyStartDate: {
             type: Number,
             default: 1,
-        }
+        },
+        baseDate: {
+            type: String,
+            default: '',
+        },
+        startDate: {
+            type: String,
+            default: '',
+        },
+        endDate: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
-            baseDateInstance: '',
+            baseDateInstance: moment(this.baseDate, 'YYYY-MM-DD'),
             baseMonthStr: '',
-            baseStartDate: '',
-            baseEndDate: ','
+            baseStartDate: moment(this.startDate, 'YYYY-MM-DD'),
+            baseEndDate: moment(this.endDate, 'YYYY-MM-DD'),
         }
     },
     methods: {
@@ -54,7 +66,6 @@ export default {
          */
         getStartDate() {
             let date = moment(this.baseDateInstance);
-            this.baseStartDate = date.clone();
             const youbiNum = date.day();
             return date.subtract(youbiNum, 'days');
         },
@@ -64,7 +75,6 @@ export default {
         getEndDate() {
             let date = moment(this.baseDateInstance);
             date.add(1, 'months').subtract(1, 'days');
-            this.baseEndDate = date.clone();
             const youbiNum = date.day();
             return date.add(6 - youbiNum, 'days');
         },
@@ -113,16 +123,6 @@ export default {
         }
     },
     created() {
-        // TODO:初回読み込み時の今月分しか対応できていない
-        let today = moment();
-        let date = moment().date(this.monthlyStartDate); // 今月の基準日
-        if (today.isBefore(date, 'day')) {
-            // 今月の基準日より前なら先月分
-            this.baseDateInstance = moment().subtract(1, 'months').date(this.monthlyStartDate);
-        } else {
-            // 今月の基準日以降なら今月分
-            this.baseDateInstance = moment().date(this.monthlyStartDate);
-        }
         this.baseMonthStr = this.baseDateInstance.format('YYYY年MM月');
     },
     computed: {

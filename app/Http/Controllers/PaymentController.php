@@ -80,6 +80,9 @@ class PaymentController extends Controller
             'monthly_start_date' => Auth::user()->monthly_start_date,
             'payments' => $payments,
             'categories' => $categories,
+            'base_date' => $baseDate->copy()->format('Y-m-d H:i:s'),
+            'start_date' => $period['start_date'],
+            'end_date' => $period['end_date'],
         ];
         return view('payment.show', $viewParams);
     }
