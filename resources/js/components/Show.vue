@@ -6,6 +6,7 @@
         </calendar>
         <payment-data
         :payments="payments"
+        :categories="categories"
         >
         </payment-data>
     </div>
@@ -27,6 +28,10 @@ export default {
         },
         payments: {
             type: Object,
+            default: [],
+        },
+        categories: {
+            type: Array,
             default: [],
         }
     }

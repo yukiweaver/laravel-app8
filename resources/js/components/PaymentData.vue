@@ -1,34 +1,20 @@
 <template>
     <div>
         <table class="table">
-            <!-- ここのループでエラー、どうするか -->
-            <p v-for="(items, index) in payments" :key="index">{{ index }}</p>
-            <tr v-for="item in items" :key="item.id">
-                <td>{{ item.category_id }}</td>
-                <td>{{ item.memo }}</td>
-                <td>{{ item.amount }}円</td>
-                <td>
-                    <button class="btn btn-sm btn-primary">編集</button>
-                </td>
-            </tr>
 
-            <p>07/16</p>
-            <tr>
-                <td>食費</td>
-                <td>ここにメモああああああああああああ</td>
-                <td>1000円</td>
-                <td>
-                    <button class="btn btn-sm btn-primary">編集</button>
-                </td>
-            </tr>
-            <tr>
-                <td>衣服</td>
-                <td></td>
-                <td>1500円</td>
-                <td>
-                    <button class="btn btn-sm btn-primary">編集</button>
-                </td>
-            </tr>
+            <tbody v-for="(items, index) in payments" :key="index">
+                <tr>
+                    <th>{{ index }}</th>
+                </tr>
+                <tr v-for="item in items" :key="item.id">
+                    <td>{{ getCategoryName(categories, item.category_id) }}</td>
+                    <td>{{ item.memo }}</td>
+                    <td>{{ item.amount }}円</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary">編集</button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </template>
@@ -39,6 +25,15 @@ export default {
         payments: {
             type: Object,
             default: [],
+        },
+        categories: {
+            type: Array,
+            default: [],
+        },
+    },
+    methods: {
+        getCategoryName(categories, categoryId) {
+            return this.getCategoryNameById(categories, categoryId);
         }
     }
 }

@@ -15,6 +15,24 @@ export default {
                     return s.charAt(1).toUpperCase();
                 }
             );
+        },
+
+        /**
+         * カテゴリーの名前を返す
+         * @param {array} categories
+         * @param {int} categoryId 
+         * @returns {string}
+         */
+         getCategoryNameById: function(categories, categoryId) {
+            let categoryName = '';
+            for(let category of categories) {
+                if (category.id == categoryId) {
+                    categoryName = category.name;
+                    break;
+                }
+            }
+
+            return categoryName;
         }
     }
 }

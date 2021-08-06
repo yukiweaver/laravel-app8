@@ -31,4 +31,9 @@ class Category extends Model
     {
         return $this->whereIn('type', $types)->get();
     }
+
+    public function getCategoryAll()
+    {
+        return $this->all();
+    }
 }

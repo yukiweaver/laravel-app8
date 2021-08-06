@@ -13,6 +13,7 @@
             <show
             :monthly-start-date='@json($monthly_start_date)'
             :payments='@json($payments)'
+            :categories='@json($categories)'
             >
             </show>
           </div>

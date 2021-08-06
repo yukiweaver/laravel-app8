@@ -75,9 +75,11 @@ class PaymentController extends Controller
         $period = $this->paymentService->getPeriodByBaseDate($baseDate);
         $payments = $this->payment->getPaymentsByPeriod(Auth::user()->id, $period['start_date'], $period['end_date']);
         $payments = $this->paymentService->convertGroupByPaymentDate($payments);
+        $categories = $this->category->getCategoryAll();
         $viewParams = [
             'monthly_start_date' => Auth::user()->monthly_start_date,
             'payments' => $payments,
+            'categories' => $categories,
         ];
         return view('payment.show', $viewParams);
     }
