@@ -5,11 +5,12 @@
         :start-date="startDate"
         :end-date="endDate"
         :show-path="showPath"
+        :initial-payments="paymentData"
         @payment-data="paymentData = $event"
         >
         </calendar>
         <payment-data
-        :payments="paymentData"
+        :initial-payments="paymentData"
         :categories="categories"
         >
         </payment-data>

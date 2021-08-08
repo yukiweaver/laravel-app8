@@ -23,10 +23,18 @@
             </thead>
             <tbody>
                 <tr v-for="(week, index) in calendars" :key="index">
+                    <!-- TODO:レイアウトどうにかする -->
                     <td
                         :class="[isInActiveDay(day.date) ? 'inactive' : '', 'days']"
                         v-for="(day, index) in week" :key="index">
                         {{ sliceDate(day.date) }}
+                        <div v-for="(items, paymentDate) in payments" :key="paymentDate">
+                            <p v-for="item in items" :key="item.id">
+                                <template v-if="day.date == paymentDate">
+                                    {{ item.amount }}
+                                </template>
+                            </p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -54,6 +62,10 @@ export default {
             type: String,
             default: '',
         },
+        initialPayments: {
+            type: Object,
+            default: [],
+        },
     },
     data() {
         return {
@@ -64,6 +76,7 @@ export default {
             baseMonthStr: '',
             baseStartDateStr: '',
             baseEndDateStr: '',
+            payments: this.initialPayments,
         }
     },
     methods: {
@@ -98,10 +111,10 @@ export default {
             for (let week = 0; week < weekNumber; week++) {
                 let weekRow = [];
                 for (let day = 0; day < 7; day++) {
-                    let year = startDate.get('year');
-                    let month = startDate.get('month') + 1; // moment.jsの仕様上monthは0〜11のため+1する
+                    let year = startDate.format('YYYY');
+                    let month = startDate.format('MM');
                     weekRow.push({
-                        date: year + '-' + month + '-' + startDate.get('date'),
+                        date: year + '-' + month + '-' + startDate.format('DD'),
                     });
                     startDate.add(1, 'days');
                 }
@@ -179,6 +192,7 @@ export default {
             this.baseMonthStr = this.baseDateInstance.format('YYYY年MM月');
             this.baseStartDateStr = this.baseStartDate.format('MM月DD日');
             this.baseEndDateStr = this.baseEndDate.format('MM月DD日');
+            this.payments = data.payments;
         }
 
     },

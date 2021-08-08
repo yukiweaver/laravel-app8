@@ -2,7 +2,7 @@
     <div>
         <table class="table">
 
-            <tbody v-for="(items, index) in payments" :key="index">
+            <tbody v-for="(items, index) in initialPayments" :key="index">
                 <tr>
                     <th>{{ index }}</th>
                 </tr>
@@ -22,7 +22,7 @@
 <script>
 export default {
     props: {
-        payments: {
+        initialPayments: {
             type: Object,
             default: [],
         },
