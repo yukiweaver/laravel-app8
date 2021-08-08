@@ -18,6 +18,6 @@ if (!function_exists('putJsonSuccess')) {
             'status' => 'ok',
             'content' => $data,
         ];
-        response()->json($array, 200);
+        return response()->json($array, 200);
     }
 }

@@ -1,10 +1,10 @@
 <template>
     <div>
         <calendar
-        :monthly-start-date="monthlyStartDate"
         :base-date="baseDate"
         :start-date="startDate"
         :end-date="endDate"
+        :show-path="showPath"
         >
         </calendar>
         <payment-data
@@ -25,10 +25,6 @@ export default {
         PaymentData,
     },
     props: {
-        monthlyStartDate: {
-            type: Number,
-            default: 1,
-        },
         payments: {
             type: Object,
             default: [],
@@ -46,6 +42,10 @@ export default {
             default: '',
         },
         endDate: {
+            type: String,
+            default: '',
+        },
+        showPath: {
             type: String,
             default: '',
         },

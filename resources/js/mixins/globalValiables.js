@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 export default {
     computed:{
         //
@@ -33,6 +35,18 @@ export default {
             }
 
             return categoryName;
+        },
+
+        /**
+         * GETでリクエスト
+         * @param {string} url 
+         * @param {object} params 
+         * @returns 
+         */
+        async requestGet(url, params) {
+            return await axios.get(url, {
+                params: params
+            });
         }
     }
 }

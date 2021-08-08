@@ -11,12 +11,12 @@
           <div class="card-body text-center">
             <h2 class="h3 card-title text-center mt-2">カレンダー</h2>
             <show
-            :monthly-start-date='@json($monthly_start_date)'
             :payments='@json($payments)'
             :categories='@json($categories)'
             :base-date='@json($base_date)'
             :start-date='@json($start_date)'
             :end-date='@json($end_date)'
+            show-path={{ route('payment.show') }}
             >
             </show>
           </div>

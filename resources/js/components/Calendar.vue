@@ -1,9 +1,12 @@
 <template>
     <div>
         <div>
-            <span class="btn btn-sm btn-primary">←</span>
-            <div id="border" class="border" style="padding:10px;">{{ baseMonthStr }}</div>
-            <span class="btn btn-sm btn-primary">→</span>
+            <span class="btn btn-sm btn-primary" @click="clickPreviousMonth">←</span>
+            <div id="border" class="border" style="padding:10px;">
+                {{ baseMonthStr }}<br>
+                （{{ baseStartDateStr }} 〜 {{ baseEndDateStr }}）
+            </div>
+            <span class="btn btn-sm btn-primary" @click="clickNextMonth">→</span>
         </div>
         <br>
         <table class="osare-table col5t">
@@ -35,10 +38,6 @@
 import moment from 'moment'
 export default {
     props: {
-        monthlyStartDate: {
-            type: Number,
-            default: 1,
-        },
         baseDate: {
             type: String,
             default: '',
@@ -51,13 +50,20 @@ export default {
             type: String,
             default: '',
         },
+        showPath: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
             baseDateInstance: moment(this.baseDate, 'YYYY-MM-DD'),
-            baseMonthStr: '',
             baseStartDate: moment(this.startDate, 'YYYY-MM-DD'),
             baseEndDate: moment(this.endDate, 'YYYY-MM-DD'),
+            date: moment(),
+            baseMonthStr: '',
+            baseStartDateStr: '',
+            baseEndDateStr: '',
         }
     },
     methods: {
@@ -107,8 +113,8 @@ export default {
         /**
          * inactiveクラスを付与するか判定
          */
-        isInActiveDay($day) {
-            let m = moment($day, 'YYYY-MM-DD');
+        isInActiveDay(day) {
+            let m = moment(day, 'YYYY-MM-DD');
             if (m.isBefore(this.baseStartDate, 'day') || m.isAfter(this.baseEndDate, 'day')) {
                 return true;
             }
@@ -117,13 +123,66 @@ export default {
         /**
          * 日付文字列を切り取って返す
          */
-        sliceDate($day) {
-            let m = moment($day, 'YYYY-MM-DD');
+        sliceDate(day) {
+            let m = moment(day, 'YYYY-MM-DD');
             return m.get('date');
+        },
+        /**
+         * 前の月データを表示
+         */
+        async clickPreviousMonth() {
+            this.date.subtract(1, 'month');
+            let previosDate = this.date.clone();
+            let params = {
+                year: previosDate.get('year'),
+                month: previosDate.get('month') + 1,
+                day: previosDate.get('date'),
+            };
+
+            this.requestGet(this.showPath, params)
+            .then(res => {
+                console.log('success');
+                this.setData(res.data.content);
+            })
+            .catch(error => {
+                console.error('request error URL: ' + this.showPath);
+            })
+        },
+        /**
+         * 次の月のデータを表示
+         */
+        clickNextMonth() {
+            this.date.add(1, 'month');
+            let nextDate = this.date.clone();
+            let params = {
+                year: nextDate.get('year'),
+                month: nextDate.get('month') + 1,
+                day: nextDate.get('date'),
+            };
+
+            this.requestGet(this.showPath, params)
+            .then(res => {
+                console.log('success');
+                this.setData(res.data.content);
+            })
+            .catch(error => {
+                console.error('request error URL: ' + this.showPath);
+            })
+        },
+        setData(data) {
+            this.baseDateInstance = moment(data.base_date, 'YYYY-MM-DD');
+            this.baseStartDate = moment(data.start_date, 'YYYY-MM-DD');
+            this.baseEndDate = moment(data.end_date, 'YYYY-MM-DD');
+            this.baseMonthStr = this.baseDateInstance.format('YYYY年MM月');
+            this.baseStartDateStr = this.baseStartDate.format('MM月DD日');
+            this.baseEndDateStr = this.baseEndDate.format('MM月DD日');
         }
+
     },
     created() {
         this.baseMonthStr = this.baseDateInstance.format('YYYY年MM月');
+        this.baseStartDateStr = this.baseStartDate.format('MM月DD日');
+        this.baseEndDateStr = this.baseEndDate.format('MM月DD日');
     },
     computed: {
         calendars() {
