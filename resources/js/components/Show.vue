@@ -5,10 +5,11 @@
         :start-date="startDate"
         :end-date="endDate"
         :show-path="showPath"
+        @payment-data="paymentData = $event"
         >
         </calendar>
         <payment-data
-        :payments="payments"
+        :payments="paymentData"
         :categories="categories"
         >
         </payment-data>
@@ -49,6 +50,11 @@ export default {
             type: String,
             default: '',
         },
+    },
+    data() {
+        return {
+            paymentData: this.payments,
+        }
     }
 }
 </script>

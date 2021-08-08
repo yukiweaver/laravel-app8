@@ -141,7 +141,8 @@ export default {
 
             this.requestGet(this.showPath, params)
             .then(res => {
-                console.log('success');
+                console.log('click previos success');
+                this.$emit('payment-data', res.data.content.payments);
                 this.setData(res.data.content);
             })
             .catch(error => {
@@ -162,7 +163,9 @@ export default {
 
             this.requestGet(this.showPath, params)
             .then(res => {
-                console.log('success');
+                console.log('click next success');
+                console.log(res.data.content.payments);
+                this.$emit('payment-data', res.data.content.payments);
                 this.setData(res.data.content);
             })
             .catch(error => {
