@@ -32,6 +32,9 @@ class Category extends Model
         return $this->whereIn('type', $types)->get();
     }
 
+    /**
+     * 全カテゴリーを取得
+     */
     public function getCategoryAll()
     {
         return $this->all();

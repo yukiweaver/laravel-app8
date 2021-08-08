@@ -6,6 +6,8 @@
         :end-date="endDate"
         :show-path="showPath"
         :initial-payments="paymentData"
+        :payment-expense-type="paymentExpenseType"
+        :payment-income-type="paymentIncomeType"
         @payment-data="paymentData = $event"
         >
         </calendar>
@@ -50,6 +52,14 @@ export default {
         showPath: {
             type: String,
             default: '',
+        },
+        paymentExpenseType: {
+            type: Number,
+            default: 0,
+        },
+        paymentIncomeType: {
+            type: Number,
+            default: 0,
         },
     },
     data() {

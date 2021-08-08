@@ -17,6 +17,8 @@
             :start-date='@json($start_date)'
             :end-date='@json($end_date)'
             show-path={{ route('payment.show') }}
+            :payment-expense-type='@json(\PaymentConst::TYPE_EXPENSE)'
+            :payment-income-type='@json(\PaymentConst::TYPE_INCOME)'
             >
             </show>
           </div>

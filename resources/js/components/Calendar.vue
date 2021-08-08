@@ -28,13 +28,18 @@
                         :class="[isInActiveDay(day.date) ? 'inactive' : '', 'days']"
                         v-for="(day, index) in week" :key="index">
                         {{ sliceDate(day.date) }}
-                        <div v-for="(items, paymentDate) in payments" :key="paymentDate">
-                            <p v-for="item in items" :key="item.id">
+                        <template v-for="(items, paymentDate) in payments">
+                            <template v-for="item in items">
                                 <template v-if="day.date == paymentDate">
-                                    {{ item.amount }}
+                                    <p
+                                        :key="item.id"
+                                        :class="[paymentClass(item.type), 'amount']"
+                                    >
+                                        {{ item.amount }}
+                                    </p>
                                 </template>
-                            </p>
-                        </div>
+                            </template>
+                        </template>
                     </td>
                 </tr>
             </tbody>
@@ -65,6 +70,14 @@ export default {
         initialPayments: {
             type: Object,
             default: [],
+        },
+        paymentExpenseType: {
+            type: Number,
+            default: 0,
+        },
+        paymentIncomeType: {
+            type: Number,
+            default: 0,
         },
     },
     data() {
@@ -193,6 +206,13 @@ export default {
             this.baseStartDateStr = this.baseStartDate.format('MM月DD日');
             this.baseEndDateStr = this.baseEndDate.format('MM月DD日');
             this.payments = data.payments;
+        },
+        paymentClass(type) {
+            if (this.paymentExpenseType == type) {
+                return 'expense';
+            } else if (this.paymentIncomeType == type) {
+                return 'income';
+            }
         }
 
     },
@@ -204,7 +224,7 @@ export default {
     computed: {
         calendars() {
             return this.getCalendar();
-        },
+        }
     }
 }
 </script>
@@ -308,6 +328,19 @@ export default {
 
 .inactive {
     background-color: #bec4c4 !important;
+}
+
+.amount {
+    margin-bottom: 0px;
+    font-size: 10px;
+}
+
+.expense {
+    color: red;
+}
+
+.income {
+    color: blue;
 }
 
 /* スマホ調整 */

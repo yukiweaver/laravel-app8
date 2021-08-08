@@ -40,7 +40,5 @@ export default {
 </script>
 
 <style>
-    p {
-        margin: 16px 0px;
-    }
+    
 </style>

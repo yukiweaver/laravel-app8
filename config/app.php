@@ -228,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'UserConst' => App\Consts\UserConst::class,
         'CategoryConst' => App\Consts\CategoryConst::class,
+        'PaymentConst' => App\Consts\PaymentConst::class,
 
     ],
 
