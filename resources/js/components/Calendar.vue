@@ -23,7 +23,6 @@
             </thead>
             <tbody>
                 <tr v-for="(week, index) in calendars" :key="index">
-                    <!-- TODO:レイアウトどうにかする -->
                     <td
                         :class="[isInActiveDay(day.date) ? 'inactive' : '', 'days']"
                         v-for="(day, index) in week" :key="index">
