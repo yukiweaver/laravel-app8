@@ -14,6 +14,10 @@
         <payment-data
         :initial-payments="paymentData"
         :categories="categories"
+        :expense-category-list="expenseCategoryList"
+        :income-category-list="incomeCategoryList"
+        :img-path="imgPath"
+        :store-path="storePath"
         >
         </payment-data>
     </div>
@@ -61,6 +65,26 @@ export default {
             type: Number,
             default: 0,
         },
+        expenseCategoryList: {
+            type: Array,
+            default: [],
+            required: true
+        },
+        incomeCategoryList: {
+            type: Array,
+            default: [],
+            required: true
+        },
+        imgPath: {
+            type: String,
+            default: '',
+            required: true
+        },
+        storePath: {
+            type: String,
+            default: '',
+            required: true
+        }
     },
     data() {
         return {

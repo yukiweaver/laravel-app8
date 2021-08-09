@@ -76,12 +76,22 @@ class PaymentController extends Controller
         $payments = $this->payment->getPaymentsByPeriod(Auth::user()->id, $period['start_date'], $period['end_date']);
         $payments = $this->paymentService->convertGroupByPaymentDate($payments);
         $categories = $this->category->getCategoryAll();
+        $expenseCategories = $this->category->getCategoryByTypes([
+            \CategoryConst::TYPE_EXPENSE,
+            \CategoryConst::TYPE_EXPENSE_AND_INCOME,
+        ]);
+        $incomeCategories = $this->category->getCategoryByTypes([
+            \CategoryConst::TYPE_INCOME,
+            \CategoryConst::TYPE_EXPENSE_AND_INCOME,
+        ]);
         $params = [
             'payments' => $payments,
             'categories' => $categories,
             'base_date' => $baseDate->copy()->format('Y-m-d H:i:s'),
             'start_date' => $period['start_date'],
             'end_date' => $period['end_date'],
+            'expense_category_list' => $expenseCategories,
+            'income_category_list' => $incomeCategories,
         ];
         if (empty($request->all())) {
             return view('payment.show', $params);

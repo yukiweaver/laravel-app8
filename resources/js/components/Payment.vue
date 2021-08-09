@@ -8,12 +8,16 @@
                 <input type="radio" name="options" autocomplete="off"> 収入
             </label>
         </div>
-        <component 
+        <component
         :is="currentView"
         :expense-category-list="expenseCategoryList"
         :income-category-list="incomeCategoryList"
         :img-path="imgPath"
         :store-path="storePath"
+        :initial-payment-date="initialPaymentDate"
+        :initial-memo="initialMemo"
+        :initial-amount="initialAmount"
+        :initial-category-id="initialCategoryId"
         ></component>
     </div>
 </template>
@@ -46,11 +50,28 @@ export default {
             type: String,
             default: '',
             required: true
+        },
+        initialPaymentDate: {
+            type: String,
+            default: '',
+        },
+        initialMemo: {
+            type: String,
+            default: '',
+        },
+        initialAmount: {
+            type: Number,
+            default: '',
+        },
+        initialCategoryId: {
+            type: Number,
+            default: null,
         }
     },
     data() {
         return {
             currentView: 'expense',
+            amount: this.initialAmount,
         }
     },
     methods: {

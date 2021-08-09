@@ -19,6 +19,10 @@
             show-path={{ route('payment.show') }}
             :payment-expense-type='@json(\PaymentConst::TYPE_EXPENSE)'
             :payment-income-type='@json(\PaymentConst::TYPE_INCOME)'
+            :expense-category-list='@json($expense_category_list)'
+            :income-category-list='@json($income_category_list)'
+            :img-path='@json(asset(\CategoryConst::IMG_PATH))'
+            store-path={{ route('payment.store') }}
             >
             </show>
           </div>

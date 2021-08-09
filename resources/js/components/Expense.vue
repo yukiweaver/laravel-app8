@@ -72,7 +72,9 @@ export default {
             type: String,
             default: '',
             required: true
-        }
+        },
+        // TODO:編集モーダルで初期値が表示されるようにする
+        // 更新時のpathはstorePathではないため、注意
     },
     data() {
         return {
