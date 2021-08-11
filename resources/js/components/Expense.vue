@@ -73,15 +73,29 @@ export default {
             default: '',
             required: true
         },
-        // TODO:編集モーダルで初期値が表示されるようにする
-        // 更新時のpathはstorePathではないため、注意
+        initialPaymentDate: {
+            type: String,
+            default: '',
+        },
+        initialMemo: {
+            type: String,
+            default: '',
+        },
+        initialAmount: {
+            type: Number,
+            default: null,
+        },
+        initialCategoryId: {
+            type: Number,
+            default: null,
+        },
     },
     data() {
         return {
-            paymentDate: '',
-            memo: '',
-            amount: '',
-            categoryId: '',
+            paymentDate: this.initialPaymentDate,
+            memo: this.initialMemo,
+            amount: this.initialAmount,
+            categoryId: this.initialCategoryId,
             type: '1',
             messages: {
                 paymentDate: [],

@@ -72,14 +72,30 @@ export default {
             type: String,
             default: '',
             required: true
-        }
+        },
+        initialPaymentDate: {
+            type: String,
+            default: '',
+        },
+        initialMemo: {
+            type: String,
+            default: '',
+        },
+        initialAmount: {
+            type: Number,
+            default: null,
+        },
+        initialCategoryId: {
+            type: Number,
+            default: null,
+        },
     },
     data() {
         return {
-            paymentDate: '',
-            memo: '',
-            amount: '',
-            categoryId: '',
+            paymentDate: this.initialPaymentDate,
+            memo: this.initialMemo,
+            amount: this.initialAmount,
+            categoryId: this.initialCategoryId,
             type: '2',
             messages: {
                 paymentDate: [],

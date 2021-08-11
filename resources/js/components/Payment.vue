@@ -61,7 +61,7 @@ export default {
         },
         initialAmount: {
             type: Number,
-            default: '',
+            default: null,
         },
         initialCategoryId: {
             type: Number,
@@ -70,6 +70,7 @@ export default {
     },
     data() {
         return {
+            // TODO:編集時、表示させるのはexpenseとincomeでデフォルトを切り分ける必要がある
             currentView: 'expense',
             amount: this.initialAmount,
         }
