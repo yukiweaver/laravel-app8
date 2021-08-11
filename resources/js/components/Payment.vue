@@ -70,7 +70,7 @@ export default {
     },
     data() {
         return {
-            // TODO:編集時、表示させるのはexpenseとincomeでデフォルトを切り分ける必要がある
+            // TODO:編集時、表示させるのはexpenseとincomeでデフォルトを切り分ける処理にする
             currentView: 'expense',
             amount: this.initialAmount,
         }
