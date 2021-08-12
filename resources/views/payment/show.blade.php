@@ -22,7 +22,7 @@
             :expense-category-list='@json($expense_category_list)'
             :income-category-list='@json($income_category_list)'
             :img-path='@json(asset(\CategoryConst::IMG_PATH))'
-            store-path={{ route('payment.store') }}
+            update-path={{ route('payment.update') }}
             >
             </show>
           </div>

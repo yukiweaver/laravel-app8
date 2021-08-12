@@ -71,7 +71,10 @@ export default {
         storePath: {
             type: String,
             default: '',
-            required: true
+        },
+        updatePath: {
+            type: String,
+            default: '',
         },
         initialPaymentDate: {
             type: String,
@@ -89,9 +92,14 @@ export default {
             type: Number,
             default: null,
         },
+        initialPaymentId: {
+            type: Number,
+            default: null,
+        },
     },
     data() {
         return {
+            paymentId: this.initialPaymentId,
             paymentDate: this.initialPaymentDate,
             memo: this.initialMemo,
             amount: this.initialAmount,
@@ -119,13 +127,15 @@ export default {
             });
 
             let params = new URLSearchParams();
+            params.append('id', this.paymentId);
             params.append('payment_date', this.paymentDate);
             params.append('memo', this.memo);
             params.append('amount', this.amount);
             params.append('category_id', this.categoryId);
             params.append('type', this.type);
 
-            await axios.post(this.storePath, params)
+            let path = (this.paymentId === null) ? this.storePath : this.updatePath;
+            await axios.post(path, params)
             .then(function(res) {
                 console.log(res.data);
                 let response = res.data;

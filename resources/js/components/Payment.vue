@@ -14,10 +14,12 @@
         :income-category-list="incomeCategoryList"
         :img-path="imgPath"
         :store-path="storePath"
+        :update-path="updatePath"
         :initial-payment-date="initialPaymentDate"
         :initial-memo="initialMemo"
         :initial-amount="initialAmount"
         :initial-category-id="initialCategoryId"
+        :initial-payment-id="initialPaymentId"
         ></component>
     </div>
 </template>
@@ -49,7 +51,10 @@ export default {
         storePath: {
             type: String,
             default: '',
-            required: true
+        },
+        updatePath: {
+            type: String,
+            default: '',
         },
         initialPaymentDate: {
             type: String,
@@ -70,6 +75,10 @@ export default {
         initialPaymentType: {
             type: Number,
             default: 1,
+        },
+        initialPaymentId: {
+            type: Number,
+            default: null,
         },
     },
     data() {

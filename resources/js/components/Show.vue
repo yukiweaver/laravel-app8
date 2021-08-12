@@ -17,7 +17,7 @@
         :expense-category-list="expenseCategoryList"
         :income-category-list="incomeCategoryList"
         :img-path="imgPath"
-        :store-path="storePath"
+        :update-path="updatePath"
         >
         </payment-data>
     </div>
@@ -80,10 +80,9 @@ export default {
             default: '',
             required: true
         },
-        storePath: {
+        updatePath: {
             type: String,
             default: '',
-            required: true
         }
     },
     data() {

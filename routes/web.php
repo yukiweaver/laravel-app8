@@ -33,4 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'PaymentController@show',
         'as' => 'payment.show',
     ]);
+    Route::post('/payment/update', [
+        'uses' => 'PaymentController@update',
+        'as' => 'payment.update',
+    ]);
 });

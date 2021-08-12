@@ -99,4 +99,25 @@ class PaymentController extends Controller
             return putJsonSuccess($params);
         }
     }
+
+    /**
+     * 更新処理
+     */
+    public function update(PaymentRequest $request)
+    {
+        try {
+            $payment = $this->payment->getPaymentById($request->id);
+            $payment->fill($request->all())->save();
+            return putJsonSuccess();
+        } catch (\Exception $e) {
+            $data = [
+                'code' => 500,
+                'summary' => 'Exception例外エラー',
+                'errors' => [
+                    'other' => $e->getMessage(),
+                ],
+            ];
+            return putJsonError($data);
+        }
+    }
 }

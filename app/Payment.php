@@ -58,4 +58,12 @@ class Payment extends Model
 
         return $payments;
     }
+
+    /**
+     * 指定のidでデータ取得
+     */
+    public function getPaymentById($id)
+    {
+        return $this->findOrFail($id);
+    }
 }

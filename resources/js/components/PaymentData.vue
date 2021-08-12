@@ -33,12 +33,13 @@
                             :expense-category-list="expenseCategoryList"
                             :income-category-list="incomeCategoryList"
                             :img-path="imgPath"
-                            :store-path="storePath"
+                            :update-path="updatePath"
                             :initial-payment-date="item.payment_date"
                             :initial-memo="item.memo"
                             :initial-amount="item.amount"
                             :initial-category-id="item.category_id"
                             :initial-payment-type="item.type"
+                            :initial-payment-id="item.id"
                             >
                             </payment>
                         </div>
@@ -79,10 +80,9 @@ export default {
             default: '',
             required: true
         },
-        storePath: {
+        updatePath: {
             type: String,
             default: '',
-            required: true
         }
     },
     methods: {
