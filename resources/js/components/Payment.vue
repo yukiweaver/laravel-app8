@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="btn-group btn-group-toggle" ref="payment" data-toggle="buttons">
-            <label @click="handleClick" class="btn btn-secondary active" data-id="expense">
+            <label @click="handleClick" :class="[addExpenseActiveClass, 'btn', 'btn-secondary']" data-id="expense">
                 <input type="radio" name="options" autocomplete="off" checked> 支出
             </label>
-            <label @click="handleClick" class="btn btn-secondary" data-id="income">
+            <label @click="handleClick" :class="[addIncomeActiveClass, 'btn', 'btn-secondary']" data-id="income">
                 <input type="radio" name="options" autocomplete="off"> 収入
             </label>
         </div>
@@ -66,18 +66,32 @@ export default {
         initialCategoryId: {
             type: Number,
             default: null,
-        }
+        },
+        initialPaymentType: {
+            type: Number,
+            default: 1,
+        },
     },
     data() {
         return {
-            // TODO:編集時、表示させるのはexpenseとincomeでデフォルトを切り分ける処理にする
-            currentView: 'expense',
-            amount: this.initialAmount,
+            currentView: (this.initialPaymentType == 1) ? 'expense' : 'income',
         }
     },
     methods: {
         handleClick(e) {
             this.currentView = e.currentTarget.getAttribute('data-id');
+        }
+    },
+    computed: {
+        addExpenseActiveClass() {
+            if (this.currentView == 'expense') {
+                return 'active';
+            }
+        },
+        addIncomeActiveClass() {
+            if (this.currentView == 'income') {
+                return 'active';
+            }
         }
     }
 }

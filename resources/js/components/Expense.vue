@@ -125,6 +125,7 @@ export default {
             params.append('category_id', this.categoryId);
             params.append('type', this.type);
 
+            // TODO:編集時はpathを変える
             await axios.post(this.storePath, params)
             .then(function(res) {
                 console.log(res.data);

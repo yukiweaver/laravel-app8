@@ -38,6 +38,7 @@
                             :initial-memo="item.memo"
                             :initial-amount="item.amount"
                             :initial-category-id="item.category_id"
+                            :initial-payment-type="item.type"
                             >
                             </payment>
                         </div>
