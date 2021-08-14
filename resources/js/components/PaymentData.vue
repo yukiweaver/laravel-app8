@@ -34,8 +34,9 @@
                             :income-category-list="incomeCategoryList"
                             :img-path="imgPath"
                             :update-path="updatePath"
+                            :show-path="showPath"
                             :initial-payment-date="item.payment_date"
-                            :initial-memo="item.memo"
+                            :initial-memo="(item.memo) ? item.memo : ''"
                             :initial-amount="item.amount"
                             :initial-category-id="item.category_id"
                             :initial-payment-type="item.type"
@@ -83,7 +84,11 @@ export default {
         updatePath: {
             type: String,
             default: '',
-        }
+        },
+        showPath: {
+            type: String,
+            default: '',
+        },
     },
     methods: {
         getCategoryName(categories, categoryId) {

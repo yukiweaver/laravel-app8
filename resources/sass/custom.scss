@@ -11,7 +11,7 @@
 }
 /* 未選択の場合、色を薄くする */
 .sample-form input[type="radio"] + label img {
-    opacity: 0.4;
+    opacity: 0.2;
 }
 /* 選択済みの場合、色を濃くする */
 .sample-form input[type="radio"]:checked + label img {
@@ -20,7 +20,7 @@
 
 /* 未選択の場合、色を薄くする */
 .sample-form input[type="radio"] + label img {
-    opacity: 0.4;
+    opacity: 0.2;
 }
 /* 選択済みの場合、色を濃くする */
 .sample-form input[type="radio"]:checked + label img {

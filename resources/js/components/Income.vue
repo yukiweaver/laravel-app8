@@ -44,8 +44,8 @@
         </div>
         <div class="sample-form">
             <div class="categories" v-for="category in incomeCategoryList" :key="category.id">
-                <input v-model="categoryId" :id="category.id" type="radio" :value="category.id">
-                <label :for="category.id"><img :src="imgPath + '/' + category.img" width="60" height="60"></label>
+                <input v-model="categoryId" :id="'#' + paymentId + category.id" type="radio" :value="category.id">
+                <label :for="'#' + paymentId + category.id"><img :src="imgPath + '/' + category.img" width="60" height="60"></label>
                 <p>{{ category.name }}</p>
             </div>
         </div>
@@ -73,6 +73,10 @@ export default {
             default: '',
         },
         updatePath: {
+            type: String,
+            default: '',
+        },
+        showPath: {
             type: String,
             default: '',
         },
@@ -116,7 +120,10 @@ export default {
         }
     },
     mounted: function() {
-        this.paymentDate = moment(new Date).format('YYYY-MM-DD');
+        if (!this.paymentDate) {
+            // 登録時は今日の日付
+            this.paymentDate = moment(new Date).format('YYYY-MM-DD');
+        }
     },
     methods: {
         async submit() {
@@ -149,8 +156,13 @@ export default {
                     });
                 } else {
                     // 成功時
-                    alert('登録しました');
-                    this.resetAll();
+                    if (this.paymentId === null) {
+                        alert('登録しました');
+                        this.resetAll();
+                    } else {
+                        alert('更新しました。');
+                        window.location.href = this.showPath;
+                    }
                 }
             }.bind(this))
             .catch(function(error) {

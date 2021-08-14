@@ -56,6 +56,10 @@ export default {
             type: String,
             default: '',
         },
+        showPath: {
+            type: String,
+            default: '',
+        },
         initialPaymentDate: {
             type: String,
             default: '',

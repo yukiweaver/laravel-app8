@@ -18,6 +18,7 @@
         :income-category-list="incomeCategoryList"
         :img-path="imgPath"
         :update-path="updatePath"
+        :show-path="showPath"
         >
         </payment-data>
     </div>
