@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', '入力')
+@section('title', 'カレンダー')
 
 @section('content')
 @include('nav')

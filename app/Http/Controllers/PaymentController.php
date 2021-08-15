@@ -120,4 +120,12 @@ class PaymentController extends Controller
             return putJsonError($data);
         }
     }
+
+    /**
+     * グラフページ
+     */
+    public function graph()
+    {
+        return view('payment.graph');
+    }
 }

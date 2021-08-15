@@ -37,4 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'PaymentController@update',
         'as' => 'payment.update',
     ]);
+    Route::get('payment/graph', [
+        'uses' => 'PaymentController@graph',
+        'as' => 'payment.graph',
+    ]);
 });
