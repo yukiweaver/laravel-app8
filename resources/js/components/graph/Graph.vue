@@ -10,6 +10,7 @@
         </div>
         <component
         :is="currentView"
+        :initial-base-date-info="initialBaseDateInfo"
         ></component>
     </div>
 </template>
@@ -21,6 +22,12 @@ export default {
     components: {
         Expense,
         SaveAmount,
+    },
+    props: {
+        initialBaseDateInfo: {
+            type: Object,
+            default: {},
+        },
     },
     data() {
         return {

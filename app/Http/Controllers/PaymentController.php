@@ -124,8 +124,18 @@ class PaymentController extends Controller
     /**
      * グラフページ
      */
-    public function graph()
+    public function graph(Request $request)
     {
-        return view('payment.graph');
+        $monthlyStartDate = Auth::user()->monthly_start_date;
+        $baseDate = $this->paymentService->getBaseDate($monthlyStartDate, $request->all());
+        $period = $this->paymentService->getPeriodByBaseDate($baseDate);
+        $viewParams = [
+            'base_date_info' => [
+                'base_date' => $baseDate,
+                'start_date' => $period['start_date'],
+                'end_date' => $period['end_date'],
+            ],
+        ];
+        return view('payment.graph', $viewParams);
     }
 }

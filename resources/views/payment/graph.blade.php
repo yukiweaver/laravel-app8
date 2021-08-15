@@ -10,7 +10,9 @@
             <div class="card mt-3">
                 <div class="card-body text-center">
                     <h2 class="h3 card-title text-center mt-2">グラフ</h2>
-                    <graph></graph>
+                    <graph
+                    :initial-base-date-info='@json($base_date_info)'
+                    ></graph>
                 </div>
             </div>
         </div>
