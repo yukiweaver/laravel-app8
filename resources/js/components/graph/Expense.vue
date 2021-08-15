@@ -8,12 +8,17 @@
             </div>
             <span class="btn btn-sm btn-primary">→</span>
         </div>
+        <div class="expense-chart">
+            <expense-chart></expense-chart>
+        </div>
     </div>
 </template>
 
 <script>
 import moment from 'moment'
+import ExpenseChart from './ExpenseChart.vue';
 export default {
+    components: { ExpenseChart },
     props: {
         initialBaseDateInfo: {
             type: Object,
