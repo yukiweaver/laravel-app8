@@ -1,8 +1,24 @@
 <template>
     <div>
+        <table id="total-payment" class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>収入</th>
+                    <th>支出</th>
+                    <th>合計</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ totalPaymentInfo.total_income }}円</td>
+                    <td>{{ totalPaymentInfo.total_expense }}円</td>
+                    <td>{{ totalPaymentInfo.remaining_amount }}円</td>
+                </tr>
+            </tbody>
+        </table>
         <table class="table">
 
-            <tbody v-for="(items, index) in initialPayments" :key="index">
+            <tbody v-for="(items, index) in payments" :key="index">
                 <tr>
                     <th>{{ index }}</th>
                 </tr>
@@ -18,7 +34,7 @@
         </table>
 
         <!-- Modal -->
-        <template v-for="items in initialPayments">
+        <template v-for="items in payments">
             <div v-for="item in items" :key="item.id" class="modal fade" :id="'exampleModal' + item.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -90,14 +106,48 @@ export default {
             default: '',
         },
     },
+    data() {
+        return {
+            //
+        }
+    },
     methods: {
         getCategoryName(categories, categoryId) {
             return this.getCategoryNameById(categories, categoryId);
         }
-    }
+    },
+    computed: {
+        // data()にpropsからの値を代入すると初回以外値が更新されないため、computedを使用
+        payments() {
+            return this.initialPayments;
+        },
+        /**
+         * 収入、支出、残りの額を算出
+         */
+        totalPaymentInfo() {
+            let totalIncome = 0;
+            let totalExpense = 0;
+            for(let paymentDate in this.payments) {
+                this.payments[paymentDate].forEach(function(v, i) {
+                    if (v.type == 1) {
+                        totalExpense += v.amount;
+                    } else if (v.type == 2) {
+                        totalIncome += v.amount;
+                    }
+                });
+            }
+            return {
+                'total_income': totalIncome,
+                'total_expense': totalExpense,
+                'remaining_amount': totalIncome - totalExpense
+            };
+        }
+    },
 }
 </script>
 
 <style>
-    
+    #total-payment {
+        margin-top: 15px;
+    }
 </style>
