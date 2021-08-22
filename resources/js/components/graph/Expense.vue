@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="period">
             <span class="btn btn-sm btn-primary">←</span>
             <div id="border" class="border" style="padding:10px;">
                 {{ baseMonthStr }}<br>
@@ -9,7 +9,11 @@
             <span class="btn btn-sm btn-primary">→</span>
         </div>
         <div class="expense-chart">
-            <expense-chart></expense-chart>
+            <expense-chart
+            :expenses="expenses"
+            :category-colors="categoryColors"
+            >
+            </expense-chart>
         </div>
     </div>
 </template>
@@ -21,6 +25,14 @@ export default {
     components: { ExpenseChart },
     props: {
         initialBaseDateInfo: {
+            type: Object,
+            default: {},
+        },
+        expenses: {
+            type: Array,
+            default: [],
+        },
+        categoryColors: {
             type: Object,
             default: {},
         },
@@ -54,5 +66,8 @@ export default {
 </script>
 
 <style>
-
+    .period {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 </style>

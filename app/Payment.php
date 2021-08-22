@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Payment extends Model
 {
@@ -47,7 +48,7 @@ class Payment extends Model
      * @param int $userId
      * @param string $startDate
      * @param string $endDate
-     * @return collection
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function getPaymentsByPeriod($userId, $startDate, $endDate)
     {
@@ -57,6 +58,33 @@ class Payment extends Model
             ->get();
 
         return $payments;
+    }
+
+    /**
+     * 指定期間の支出の合計をカテゴリー別で取得
+     * @param int $userId
+     * @param string $startDate
+     * @param string $endDate
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function getTotalExpenseAmountGroupCategory($userId, $startDate, $endDate)
+    {
+        $query = $this->query();
+        return $query
+            ->select(
+                DB::raw('(sum(payments.amount)) as total_amount'),
+                DB::raw('payments.category_id'),
+                DB::raw('categories.name')
+            )
+            ->join('categories', 'payments.category_id', '=', 'categories.id')
+            ->where([
+                ['payments.user_id', '=', $userId],
+                ['payments.type', '=', \PaymentConst::TYPE_EXPENSE],
+            ])
+            ->whereBetween('payments.payment_date', [$startDate, $endDate])
+            ->orderBy('payments.category_id', 'ASC')
+            ->groupBy(DB::raw('payments.category_id, categories.name'))
+            ->get();
     }
 
     /**

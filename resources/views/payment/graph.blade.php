@@ -12,6 +12,8 @@
                     <h2 class="h3 card-title text-center mt-2">グラフ</h2>
                     <graph
                     :initial-base-date-info='@json($base_date_info)'
+                    :expenses='@json($expenses)'
+                    :category-colors='@json(\CategoryConst::CATEGORY_COLORS)'
                     ></graph>
                 </div>
             </div>

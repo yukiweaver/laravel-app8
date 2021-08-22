@@ -11,6 +11,8 @@
         <component
         :is="currentView"
         :initial-base-date-info="initialBaseDateInfo"
+        :expenses="expenses"
+        :category-colors="categoryColors"
         ></component>
     </div>
 </template>
@@ -25,6 +27,14 @@ export default {
     },
     props: {
         initialBaseDateInfo: {
+            type: Object,
+            default: {},
+        },
+        expenses: {
+            type: Array,
+            default: [],
+        },
+        categoryColors: {
             type: Object,
             default: {},
         },

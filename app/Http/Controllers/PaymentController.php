@@ -129,12 +129,14 @@ class PaymentController extends Controller
         $monthlyStartDate = Auth::user()->monthly_start_date;
         $baseDate = $this->paymentService->getBaseDate($monthlyStartDate, $request->all());
         $period = $this->paymentService->getPeriodByBaseDate($baseDate);
+        $expenses = $this->payment->getTotalExpenseAmountGroupCategory(Auth::user()->id, $period['start_date'], $period['end_date']);
         $viewParams = [
             'base_date_info' => [
                 'base_date' => $baseDate,
                 'start_date' => $period['start_date'],
                 'end_date' => $period['end_date'],
             ],
+            'expenses' => $expenses,
         ];
         return view('payment.graph', $viewParams);
     }

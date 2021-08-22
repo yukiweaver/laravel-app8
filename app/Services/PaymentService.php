@@ -3,15 +3,18 @@
 namespace App\Services;
 
 use App\Services\DateService;
+use App\Payment;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentService
 {
     private $dateService;
+    private $payment;
 
-    public function __construct(DateService $dateService)
+    public function __construct(DateService $dateService, Payment $payment)
     {
         $this->dateService = $dateService;
+        $this->payment = $payment;
     }
 
     /**
