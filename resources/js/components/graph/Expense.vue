@@ -15,14 +15,23 @@
             >
             </expense-chart>
         </div>
+        <div class="expense-data">
+            <expense-data
+            :expenses="expenses"
+            ></expense-data>
+        </div>
     </div>
 </template>
 
 <script>
-import moment from 'moment'
+import moment from 'moment';
 import ExpenseChart from './ExpenseChart.vue';
+import ExpenseData from './ExpenseData.vue';
 export default {
-    components: { ExpenseChart },
+    components: { 
+        ExpenseChart,
+        ExpenseData,
+    },
     props: {
         initialBaseDateInfo: {
             type: Object,
@@ -69,5 +78,13 @@ export default {
     .period {
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+    .expense-data {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .expense-chart {
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 </style>
