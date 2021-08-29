@@ -36,7 +36,6 @@ export default {
          * 合計を算出
          */
         totalExpenseAmount() {
-            console.log(this.expenses);
             if (this.expenses.length) {
                 let totalExpenseAmount = 0;
                 for(let val of this.expenses) {
