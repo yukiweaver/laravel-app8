@@ -12,8 +12,9 @@
                     <h2 class="h3 card-title text-center mt-2">グラフ</h2>
                     <graph
                     :initial-base-date-info='@json($base_date_info)'
-                    :expenses='@json($expenses)'
+                    :initial-expenses='@json($expenses)'
                     :category-colors='@json(\CategoryConst::CATEGORY_COLORS)'
+                    graph-path={{ route('payment.graph') }}
                     ></graph>
                 </div>
             </div>

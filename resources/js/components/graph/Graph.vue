@@ -11,8 +11,9 @@
         <component
         :is="currentView"
         :initial-base-date-info="initialBaseDateInfo"
-        :expenses="expenses"
+        :initial-expenses="initialExpenses"
         :category-colors="categoryColors"
+        :graph-path="graphPath"
         ></component>
     </div>
 </template>
@@ -30,13 +31,17 @@ export default {
             type: Object,
             default: {},
         },
-        expenses: {
+        initialExpenses: {
             type: Array,
             default: [],
         },
         categoryColors: {
             type: Object,
             default: {},
+        },
+        graphPath: {
+            type: String,
+            default: '',
         },
     },
     data() {

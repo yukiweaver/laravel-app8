@@ -3,7 +3,7 @@ import { Pie } from 'vue-chartjs';
 export default {
     extends: Pie,
     props: {
-        expenses: {
+        initialExpenses: {
             type: Array,
             default: [],
         },
@@ -34,19 +34,34 @@ export default {
         }
     },
     created() {
-        // data、label、backgroundColorをセット
-        if (this.expenses.length) {
-            let totalAmounts = [];
-            let categoryNames = [];
-            let backgroundColors = [];
-            for(let val of this.expenses) {
-                totalAmounts.push(val.total_amount);
-                categoryNames.push(val.name);
-                backgroundColors.push(this.colors[val.name]);
+        this.setChartData(this.initialExpenses);
+    },
+    watch: {
+        // propsのinitialExpensesの値が変動した時に実行される
+        initialExpenses: function(newValue) {
+            this.setChartData(newValue);
+            this.renderChart(this.data, this.options)
+        }
+    },
+    methods: {
+        setChartData(expenses) {
+            if (expenses.length) {
+                let totalAmounts = [];
+                let categoryNames = [];
+                let backgroundColors = [];
+                for(let val of this.initialExpenses) {
+                    totalAmounts.push(val.total_amount);
+                    categoryNames.push(val.name);
+                    backgroundColors.push(this.colors[val.name]);
+                }
+                this.data.labels = categoryNames;
+                this.data.datasets[0].data = totalAmounts;
+                this.data.datasets[0].backgroundColor = backgroundColors;
+            } else {
+                this.data.labels = [];
+                this.data.datasets[0].data = [];
+                this.data.datasets[0].backgroundColor = [];
             }
-            this.data.labels = categoryNames;
-            this.data.datasets[0].data = totalAmounts;
-            this.data.datasets[0].backgroundColor = backgroundColors;
         }
     },
     mounted () {

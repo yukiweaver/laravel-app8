@@ -155,7 +155,7 @@ export default {
         /**
          * 前の月データを表示
          */
-        async clickPreviousMonth() {
+        clickPreviousMonth() {
             this.date.subtract(1, 'month');
             let previosDate = this.date.clone();
             let params = {

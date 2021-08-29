@@ -130,7 +130,7 @@ class PaymentController extends Controller
         $baseDate = $this->paymentService->getBaseDate($monthlyStartDate, $request->all());
         $period = $this->paymentService->getPeriodByBaseDate($baseDate);
         $expenses = $this->payment->getTotalExpenseAmountGroupCategory(Auth::user()->id, $period['start_date'], $period['end_date']);
-        $viewParams = [
+        $params = [
             'base_date_info' => [
                 'base_date' => $baseDate,
                 'start_date' => $period['start_date'],
@@ -138,6 +138,10 @@ class PaymentController extends Controller
             ],
             'expenses' => $expenses,
         ];
-        return view('payment.graph', $viewParams);
+        if (empty($request->all())) {
+            return view('payment.graph', $params);
+        } else {
+            return putJsonSuccess($params);
+        }
     }
 }
