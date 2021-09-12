@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class Payment extends Model
 {
@@ -93,5 +94,25 @@ class Payment extends Model
     public function getPaymentById($id)
     {
         return $this->findOrFail($id);
+    }
+
+    /**
+     * 指定ユーザの最初の帳簿データを1件返す
+     * @param App\User $user
+     * @return App\Payment
+     */
+    public function getFirstPaymentByUser(User $user)
+    {
+        return $user->payments()->orderBy('payment_date', 'ASC')->first();
+    }
+
+    /**
+     * 指定ユーザの最後の帳簿データを1件返す
+     * @param App\User $user
+     * @return App\Payment
+     */
+    public function getLastPaymentByUser(User $user)
+    {
+        return $user->payments()->orderBy('payment_date', 'DESC')->first();
     }
 }

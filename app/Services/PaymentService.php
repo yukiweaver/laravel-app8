@@ -72,4 +72,31 @@ class PaymentService
 
         return $payments->groupby('payment_date');
     }
+
+    /**
+     * 月ごとの貯金額を返す
+     * @param array $params [
+     *   'user_id' => '',
+     *   'monthly_start_date' => '',
+     * ]
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function getSaveAmounts($params)
+    {
+        // TODO:最初と最後のpayment取得してその差分の月数分ループしてDBからデータ取得する
+        // データ取得したらさらにループさせて配列に貯金額を格納
+        // [
+        //     [
+        //         'save_amount' => '',
+        //         'month' => '2021年8月',
+        //         'start_date' => '2021-08-15',
+        //         'end_date' => '2021-09-14',
+        //     ],
+        //     [
+        //         //
+        //     ],
+        // ]
+        $firstPayment = $this->payment->getFirstPaymentByUser(Auth::user());
+        $lastPayment = $this->payment->getLastPaymentByUser(Auth::user());
+    }
 }
