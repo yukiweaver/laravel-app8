@@ -115,4 +115,21 @@ class Payment extends Model
     {
         return $user->payments()->orderBy('payment_date', 'DESC')->first();
     }
+
+    /**
+     * 指定の期間内の支出の合計、収入の合計を返す
+     * @param App\User $user
+     * @param string $startDate
+     * @param string $endDate
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function gePaymentTotalAmountByPeriod(User $user, string $startDate, string $endDate)
+    {
+        return $user->payments()
+            ->select(DB::raw("type, sum(amount) as sum_amount"))
+            ->whereBetween('payment_date', [$startDate, $endDate])
+            ->groupBy('type')
+            ->orderBy('type', 'ASC')
+            ->get();
+    }
 }

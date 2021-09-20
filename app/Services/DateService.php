@@ -31,4 +31,48 @@ class DateService
 
         return $this->today->copy()->year($year)->month($month)->day($day);
     }
+
+    /**
+     * 指定の日付のCarbonインスタンスを作成し返す
+     * @param string $date YYYY-MM-DD形式
+     * @return Carbon
+     */
+    public function getDateByDate($date, $dateTimeFlg = false)
+    {
+
+        return $dateTimeFlg ?
+            $this->today->copy()->createFromFormat('Y-m-d H:i:s', $date, 'Asia/Tokyo') :
+            $this->today->copy()->createFromFormat('Y-m-d', $date, 'Asia/Tokyo');
+    }
+
+    /**
+     * 指定のCarbonインスタンスから日付を返す
+     * @param Carbon\Carbon $carbon
+     * @return string
+     */
+    public function getDay(Carbon $carbon)
+    {
+        return $carbon->copy()->day;
+    }
+
+    public function getYear(Carbon $carbon)
+    {
+        return $carbon->copy()->year;
+    }
+
+    public function getMonth(Carbon $carbon)
+    {
+        return $carbon->copy()->month;
+    }
+
+    /**
+     * 指定の月数分だけ減らしたCarbonを返す
+     * @param Carbon\Carbon $carbon
+     * @param int $number
+     * @return Carbon\Carbon
+     */
+    public function getSubMonthByNumber(Carbon $carbon, $number)
+    {
+        return $carbon->copy()->subMonths($number);
+    }
 }

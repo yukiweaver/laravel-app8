@@ -130,7 +130,7 @@ class PaymentController extends Controller
         $baseDate = $this->paymentService->getBaseDate($monthlyStartDate, $request->all());
         $period = $this->paymentService->getPeriodByBaseDate($baseDate);
         $expenses = $this->payment->getTotalExpenseAmountGroupCategory(Auth::user()->id, $period['start_date'], $period['end_date']);
-        $saveAmounts = $this->paymentService->getSaveAmounts([
+        $saveAmounts = $this->paymentService->getMonthlySaveAmounts([
             'user_id' => Auth::user()->id,
             'monthly_start_date' => $monthlyStartDate,
         ]);
