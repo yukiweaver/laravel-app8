@@ -141,6 +141,7 @@ class PaymentController extends Controller
                 'end_date' => $period['end_date'],
             ],
             'expenses' => $expenses,
+            'save_amounts' => $saveAmounts,
         ];
         if (empty($request->all())) {
             return view('payment.graph', $params);

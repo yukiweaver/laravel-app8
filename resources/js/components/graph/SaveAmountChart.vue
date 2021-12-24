@@ -2,13 +2,19 @@
 import { Bar } from 'vue-chartjs';
 export default {
     extends: Bar,
+    props: {
+        saveAmountsChart: {
+            type: Object,
+            default: {},
+        },
+    },
     data() {
         return {
             data: {
-                labels: [1, 2, 3, 4, 5, 6, 7],
+                labels: this.saveAmountsChart.labels ? this.saveAmountsChart.labels : [],
                 datasets: [{
-                    label: 'My First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 45],
+                    label: '総貯金額',
+                    data: this.saveAmountsChart.data ? this.saveAmountsChart.data : [],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(54, 162, 235, 0.2)',

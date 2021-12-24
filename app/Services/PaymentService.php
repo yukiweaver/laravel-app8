@@ -83,25 +83,9 @@ class PaymentService
      */
     public function getMonthlySaveAmounts($params)
     {
-        // TODO:最初と最後のpayment取得してその差分の月数分ループしてDBからデータ取得する
-        // データ取得したらさらにループさせて配列に貯金額を格納
-        // [
-        //     [
-        //         'save_amount' => '',
-        //         'month' => '2021年8月',
-        //         'start_date' => '2021-08-15',
-        //         'end_date' => '2021-09-14',
-        //     ],
-        //     [
-        //         //
-        //     ],
-        // ]
-
         // ユーザが登録した最初と最後のデータを取得
         $firstPayment = $this->payment->getFirstPaymentByUser(Auth::user());
         $lastPayment = $this->payment->getLastPaymentByUser(Auth::user());
-        \Debugbar::info($firstPayment->payment_date);
-        \Debugbar::info($lastPayment->payment_date);
 
         if (!$firstPayment && !$lastPayment) {
             return [];
@@ -118,20 +102,24 @@ class PaymentService
         $period['start_date'] = $this->dateService->getDateByDate($period['start_date'], true);
         $period['end_date'] = $this->dateService->getDateByDate($period['end_date'], true);
 
-        \Debugbar::info($period);
         $months = $this->getNumberOfMonthsToCalculate($firstPayment, $lastPayment, $params['monthly_start_date']);
         $saveAmounts = [];
+        $totalSaveAmount = 0;
         for ($i = 1; $i <= $months; $i++) {
+            $saveAmount = $this->getSaveAmountByPaymentTotalAmounts(
+                $this->payment->gePaymentTotalAmountByPeriod(
+                    Auth::user(),
+                    $period['start_date']->format('Y-m-d H:i:s'),
+                    $period['end_date']->format('Y-m-d H:i:s')
+                )
+            );
+            $totalSaveAmount += $saveAmount;
             $saveAmounts[] = [
-                'save_amount' => $this->getSaveAmountByPaymentTotalAmounts(
-                    $this->payment->gePaymentTotalAmountByPeriod(
-                        Auth::user(),
-                        $period['start_date']->format('Y-m-d H:i:s'),
-                        $period['end_date']->format('Y-m-d H:i:s')
-                    )
-                ),
+                'save_amount' => $saveAmount,
+                'total_save_amount' => $totalSaveAmount,
                 'start_date' => $period['start_date']->format('Y-m-d H:i:s'),
                 'end_date' => $period['end_date']->format('Y-m-d H:i:s'),
+                'month_text' => $period['start_date']->format('Y年m月'),
             ];
 
             // 日付あふれを許可せずに一月進める
@@ -139,6 +127,9 @@ class PaymentService
             $period['end_date']->addMonthNoOverflow();
         }
         \Debugbar::info($saveAmounts);
+        \Debugbar::info($this->processChartJsData($saveAmounts));
+
+        return $this->processChartJsData($saveAmounts);
     }
 
     // private -----------------------------------------------------------------------
@@ -160,9 +151,6 @@ class PaymentService
         // 月の差分を出すため、日付を1日に変更
         $firstPaymentDate->day(1);
         $lastPaymentDate->day(1);
-
-        \Debugbar::info($firstPaymentDate);
-        \Debugbar::info($lastPaymentDate);
 
         return $firstPaymentDate->diffInMonths($lastPaymentDate) + 1;
     }
@@ -188,5 +176,35 @@ class PaymentService
         }
 
         return $totalIncomeAmount - $totalExpenseAmount;
+    }
+
+    /**
+     * chartjsに合う形にデータを加工して返す
+     * @return array
+     */
+    private function processChartJsData(array $saveAmounts)
+    {
+        if (empty($saveAmounts)) {
+            return [];
+        }
+
+        $length = count($saveAmounts);
+        $saveAmountTmp = $saveAmounts;
+        if ($length > \PaymentConst::DISPLAY_MAX_MONTHS_SAVE_AMOUNT) {
+            array_splice($saveAmountTmp, 0, -1 * \PaymentConst::DISPLAY_MAX_MONTHS_SAVE_AMOUNT);
+        }
+
+        $labels = [];
+        $data = [];
+        foreach ($saveAmountTmp as $val) {
+            $labels[] = $val['month_text'];
+            $data[] = $val['total_save_amount'];
+        }
+
+        return [
+            'labels' => $labels, // グラフ表示用
+            'data' => $data, // グラフ表示用
+            'save_amounts' => $saveAmounts, // 全データ一覧表示用
+        ];
     }
 }

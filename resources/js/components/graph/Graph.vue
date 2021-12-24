@@ -13,6 +13,7 @@
         :initial-base-date-info="initialBaseDateInfo"
         :initial-expenses="initialExpenses"
         :category-colors="categoryColors"
+        :save-amounts="saveAmounts"
         :graph-path="graphPath"
         ></component>
     </div>
@@ -36,6 +37,10 @@ export default {
             default: [],
         },
         categoryColors: {
+            type: Object,
+            default: {},
+        },
+        saveAmounts: {
             type: Object,
             default: {},
         },

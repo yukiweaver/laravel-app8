@@ -14,6 +14,7 @@
                     :initial-base-date-info='@json($base_date_info)'
                     :initial-expenses='@json($expenses)'
                     :category-colors='@json(\CategoryConst::CATEGORY_COLORS)'
+                    :save-amounts='@json($save_amounts)'
                     graph-path={{ route('payment.graph') }}
                     ></graph>
                 </div>
