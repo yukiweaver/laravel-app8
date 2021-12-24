@@ -3,7 +3,7 @@ import { Bar } from 'vue-chartjs';
 export default {
     extends: Bar,
     props: {
-        saveAmountsChart: {
+        saveAmountChart: {
             type: Object,
             default: {},
         },
@@ -11,10 +11,10 @@ export default {
     data() {
         return {
             data: {
-                labels: this.saveAmountsChart.labels ? this.saveAmountsChart.labels : [],
+                labels: this.saveAmountChart.labels ? this.saveAmountChart.labels : [],
                 datasets: [{
                     label: '総貯金額',
-                    data: this.saveAmountsChart.data ? this.saveAmountsChart.data : [],
+                    data: this.saveAmountChart.data ? this.saveAmountChart.data : [],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(54, 162, 235, 0.2)',

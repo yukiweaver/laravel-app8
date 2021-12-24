@@ -2,12 +2,12 @@
     <div>
         <div>
             <save-amount-chart
-            :save-amounts-chart="saveAmountChart">
+            :save-amount-chart="saveAmountChart">
             </save-amount-chart>
         </div>
         <div>
             <save-amount-data
-            :save-amounts-data="saveAmountData">
+            :save-amount-data="saveAmountData">
             </save-amount-data>
         </div>
     </div>
@@ -37,7 +37,7 @@ export default {
          * グラフ表示用データを返す
          */
         saveAmountChart() {
-            if (!this.saveAmounts.length) {
+            if (this.isEmptyObject(this.saveAmounts)) {
                 return {
                     'labels': [],
                     'data': [],
@@ -53,7 +53,7 @@ export default {
          * 一覧表示用データを返す
          */
         saveAmountData() {
-            if (!this.saveAmounts.length) {
+            if (this.isEmptyObject(this.saveAmounts)) {
                 return []
             } else {
                 this.saveAmounts.save_amounts;

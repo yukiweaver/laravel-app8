@@ -38,6 +38,15 @@ export default {
         },
 
         /**
+         * オブジェクトが空であるか判定する
+         * @param {Object} obj 
+         * @returns {boolean}
+         */
+        isEmptyObject(obj) {
+            return !Object.keys(obj).length;
+        },
+
+        /**
          * GETでリクエスト
          * @param {string} url 
          * @param {object} params 
