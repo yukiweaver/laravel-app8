@@ -54,9 +54,9 @@ export default {
          */
         saveAmountData() {
             if (this.isEmptyObject(this.saveAmounts)) {
-                return []
+                return [];
             } else {
-                this.saveAmounts.save_amounts;
+                return this.saveAmounts.save_amounts;
             }
         }
     }
